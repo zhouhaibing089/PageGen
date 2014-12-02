@@ -23,7 +23,9 @@
     			{
     				"type": "text",
     				"name": "text",
-    				"frozen": true
+    				"label": "name",
+    				"frozen": true,
+    				"wrapper": "general"
     			}
     		]
     	};
@@ -34,9 +36,7 @@
 
     	var fg = new FormGenerator(config, value);
 
-    	fg.build($("#container"), function(form) {
-    		console.log("Build completed.");
-    	});
+    	fg.build($("#container"));
     });
     </script>
 </body>

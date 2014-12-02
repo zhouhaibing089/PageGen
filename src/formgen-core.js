@@ -6,8 +6,14 @@ define(['util'], function(require, exports, module) {
     var util = require('util');
 
     // module variable
-    /* extension point */
+    /* extension point, produce inputs */
     var handlers = {};
+    /* extension point, wrapper the produced inputs */
+    var wrappers = {
+        "none": function(ele, config) {
+            return ele;
+        }
+    };
 
     var doc = document;
 
@@ -23,6 +29,11 @@ define(['util'], function(require, exports, module) {
     FG.registerHandler = function(type, handler) {
         handlers[type] = handler;
     };
+
+    /* register a new wrapper for given type */
+    FG.registerWrapper = function(type, wrapper) {
+        wrappers[type] = wrapper;
+    }
 
     /*
      * add the common attrbutes to the element
@@ -75,7 +86,10 @@ define(['util'], function(require, exports, module) {
         var index = 0;
 
         var cb = function(ele, config) {
-            form.append(ele);
+            if (config.wrapper === undefined) {
+                config.wrapper = "none";
+            }
+            form.append(wrappers[config.wrapper](ele, config));
             process(++index);
         };
 
