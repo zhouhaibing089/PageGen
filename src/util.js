@@ -1,9 +1,9 @@
 define(function(require, exports, module) {
 
     /**
-     * Object.prototype.getValue
+     * Object.prototype.get
      */
-    if (({}.getValue) === undefined) {
+    if (({}.get) === undefined) {
         
         Object.prototype.getValue = function(path) {
             var obj;
@@ -31,7 +31,7 @@ define(function(require, exports, module) {
             var name = path.substr(0, index);
             path = path.substr(index + 1);
 
-            return obj[name].getValue(path);
+            return obj[name].get(path);
         }
     }
 
@@ -94,7 +94,7 @@ define(function(require, exports, module) {
                         : (("00" + o[k]).substr(("" + o[k]).length)));
                 }
             }
-            
+
             return fmt;
         }
     }
