@@ -1,17 +1,18 @@
 /**
  * Created by zhb on 12/02/2014
  */
-define(['jquery', 'util'], function(require, exports, module) {
+define(['util'], function(require, exports, module) {
+
+    var util = require('util');
 
     // module variable
     /* extension point */
     var handlers = {
         "hidden": hidden,
-        "text": text,
-        "textarea": textarea,
-        "select": select,
-        "checkbox": checkbox
+        "text": text
     };
+
+    var doc = document;
 
 
     // FG variable 
@@ -21,15 +22,32 @@ define(['jquery', 'util'], function(require, exports, module) {
         this.value = args.length > 1 ? args[1] : {};
     };
 
-    /* init a new instance of FormGenerator */
-    FG.init = function() {
-        return new FG(arguments);
-    };
-
     /* register a new handler for given type */
     FG.registerHandler = function(type, handler) {
         handlers[type] = handler;
     };
+
+    /*
+     * add the common attrbutes to the element
+     */
+    FG.attr = function(ele, cfg) {
+        ele.attr("id", cfg.id);
+        ele.addClass(cfg["class"]);
+        ele.attr("name", cfg.name);
+    }
+
+    /*
+     * set value, and set to be disabled when frozen is true
+     */
+    FG.val = function(ele, val, frozen) {
+        if (val === undefined) {
+            return ;
+        }
+        ele.val(val);
+        if (frozen === true) {
+            ele.attr("disabled", true);
+        }
+    }
 
 
     // FGP variable
@@ -37,64 +55,65 @@ define(['jquery', 'util'], function(require, exports, module) {
 
     /**
      * the first argument is the parent element where the generated form
-     * will be inserted into.
+     * will be inserted into. and the second argument is the callback function
+     * when the build work is done.
      */
-    FGP.build = function(p) {
+    FGP.build = function(p, callback) {
         if (!(p instanceof jQuery)) {
             p = $(p);
         }
-        var form = $("<form>");
+        
+        var form = $(doc.createElement("form"));
         /* insert into dom */
-        p.append(form);
+        if (p) {
+            p.append(form);
+        }
         /* add form attributes */
-        form.attr("id", config.formId);
-        form.addClass(config.formClass);
-        form.attr("method", config.method);
-        form.attr("action", config.action);
+        form.attr("id", this.config.formId);
+        form.addClass(this.config.formClass);
+        form.attr("method", this.config.method);
+        form.attr("action", this.config.action);
+
+        var index = 0;
+
+        var cb = function(ele) {
+            form.append(ele);
+            process(++index);
+        };
+
+        var that = this;
+
+        var process = function(index) {
+            // done
+            if (index === that.config.inputs.length) {
+                if (callback !== undefined) {
+                    callback(form);
+                }
+                return ;
+            }
+
+            var input = that.config.inputs[index];
+            handlers[input.type](input, that.value.get(input.name), cb);
+        };
+
+        process(index);
     };
 
-    /**
-     * check the data integrity
-     */
-    FGP.check = function(callback) {
-
-    };
-
-
-    /**
-     * get the data in form
-     */
-    FGP.data = function(callback) {
-
+    function hidden(cfg, val, callback) {
+        var input = $(doc.createElement("input"));
+        FG.attr(input, cfg);
+        input.attr("type", "hidden");
+        FG.val(input, val, cfg.frozen);
+        callback(input);
     }
 
-
-    FGP.submit = function(callback, param) {
-        var data = $.extend(data(), param);
-
+    function text(cfg, val, callback) {
+        var input = $(doc.createElement("input"));
+        FG.attr(input, cfg);
+        input.attr("type", "text");
+        FG.val(input, val, cfg.frozen);
+        callback(input);
     }
-
-    function hidden(cfg, val) {
-
-    }
-
-    function text(cfg, val) {
-
-    }
-
-    function textarea(cfg, val) {
-
-    }
-
-    function select(cfg, val) {
-
-    }
-
-    function checkbox(cfg, val) {
-
-    }
-
-
 
     return FG;
 });

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FormGen Test</title>
+    <script src="../../lib/jquery-1.11.1.js"></script>
+    <script src="../../lib/sea.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+    <script>
+    seajs.config({
+        "base": "../../src/"
+    });
+
+    seajs.use("formgen", function(FormGenerator) {
+
+    	var config = {
+    		"inputs": [
+    			{
+    				"type": "hidden",
+    				"name": "hidden"
+    			},
+    			{
+    				"type": "text",
+    				"name": "text"
+    			}
+    		]
+    	};
+
+    	var fg = new FormGenerator(config);
+
+    	fg.build($("#container"), function(form) {
+    		console.log("Build completed.");
+    	});
+    });
+    </script>
+</body>
+</html>
