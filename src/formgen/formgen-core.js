@@ -9,11 +9,7 @@ define(['util'], function(require, exports, module) {
     /* extension point, produce inputs */
     var handlers = {};
     /* extension point, wrapper the produced inputs */
-    var wrappers = {
-        "none": function(ele, config) {
-            return ele;
-        }
-    };
+    var wrappers = {};
 
     var doc = document;
 
@@ -87,9 +83,10 @@ define(['util'], function(require, exports, module) {
 
         var cb = function(ele, config) {
             if (config.wrapper === undefined) {
-                config.wrapper = "none";
+                form.append(ele);
+            } else {
+                form.append(wrappers[config.wrapper](ele, config));
             }
-            form.append(wrappers[config.wrapper](ele, config));
             process(++index);
         };
 
