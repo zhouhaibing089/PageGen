@@ -74,7 +74,7 @@ define(['util'], function(require, exports, module) {
 
         var index = 0;
 
-        var cb = function(ele) {
+        var cb = function(ele, config) {
             form.append(ele);
             process(++index);
         };

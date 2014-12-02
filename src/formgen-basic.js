@@ -22,7 +22,7 @@ define(['formgen-core'], function(require, exports, module) {
         // set value
         FG.val(ret, val, cfg.frozen);
         // return
-        callback(ret);
+        callback(ret, cfg);
     }
 
     return FG;
