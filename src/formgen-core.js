@@ -2,8 +2,8 @@
  * Created by zhb on 12/02/2014
  */
 define(['util'], function(require, exports, module) {
-
-    var util = require('util');
+    // the util module need to be executed
+    require("util");
 
     // module variable
     /* extension point, produce inputs */
