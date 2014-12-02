@@ -5,7 +5,7 @@ define(['formgen-core'], function(require, exports, module) {
     var doc = document;
 
     FG.registerHandler("hidden", hidden);
-    FG.registerHandler("text", text);
+    FG.registerHandler("text", hidden);
 
     // just add attribute the disabled property to be true
     var disabledFrozen = function() {
@@ -23,11 +23,6 @@ define(['formgen-core'], function(require, exports, module) {
         FG.val(ret, val, cfg.frozen);
         // return
         callback(ret);
-    }
-
-    // get text input
-    function text(cfg, val, callback) {
-        return hidden(cfg, val, callback);
     }
 
     return FG;
