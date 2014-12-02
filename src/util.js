@@ -5,7 +5,7 @@ define(function(require, exports, module) {
      */
     if (({}.get) === undefined) {
         
-        Object.prototype.getValue = function(path) {
+        Object.prototype.get = function(path) {
             var obj;
             
             if (this instanceof String) {
