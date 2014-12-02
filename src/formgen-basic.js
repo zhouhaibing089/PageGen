@@ -7,20 +7,27 @@ define(['formgen-core'], function(require, exports, module) {
 	FG.registerHandler("hidden", hidden);
 	FG.registerHandler("text", text);
 
+	// just add attribute the disabled property to be true
+	var disabledFrozen = function() {
+		this.attr("disabled", true);
+	};
+
+	// get hidden input
 	function hidden(cfg, val, callback) {
-        var input = $(doc.createElement("input"));
-        FG.attr(input, cfg);
-        input.attr("type", "hidden");
-        FG.val(input, val, cfg.frozen);
-        callback(input);
+        var ret = $(doc.createElement("input"));
+        // set the frozen function
+        ret.frozen = disabledFrozen;
+        // set the attributes
+        FG.attr(ret, cfg);
+        // set value
+        FG.val(ret, val, cfg.frozen);
+        // return
+        callback(ret);
     }
 
+    // get text input
     function text(cfg, val, callback) {
-        var input = $(doc.createElement("input"));
-        FG.attr(input, cfg);
-        input.attr("type", "text");
-        FG.val(input, val, cfg.frozen);
-        callback(input);
+        return hidden(cfg, val, callback);
     }
 
     return FG;

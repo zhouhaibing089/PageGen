@@ -22,12 +22,17 @@
     			},
     			{
     				"type": "text",
-    				"name": "text"
+    				"name": "text",
+    				"frozen": true
     			}
     		]
     	};
 
-    	var fg = new FormGenerator(config);
+    	var value = {
+    		"text": "text"
+    	};
+
+    	var fg = new FormGenerator(config, value);
 
     	fg.build($("#container"), function(form) {
     		console.log("Build completed.");

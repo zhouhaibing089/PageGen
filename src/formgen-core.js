@@ -30,6 +30,7 @@ define(['util'], function(require, exports, module) {
     FG.attr = function(ele, cfg) {
         ele.attr("id", cfg.id);
         ele.addClass(cfg["class"]);
+        ele.attr("type", cfg.type);
         ele.attr("name", cfg.name);
     }
 
@@ -42,7 +43,7 @@ define(['util'], function(require, exports, module) {
         }
         ele.val(val);
         if (frozen === true) {
-            ele.attr("disabled", true);
+            ele.frozen();
         }
     }
 
