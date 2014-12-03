@@ -1,5 +1,5 @@
-define(['formgen-core'], function(require, exports, module) {
-    var FG = require('formgen-core');
+define(['formgen/core'], function(require, exports, module) {
+    var FG = require('formgen/core');
     // alias
     var doc = document;
     
@@ -10,7 +10,10 @@ define(['formgen-core'], function(require, exports, module) {
      * the general wrapper
      *  <div class="formgen">
      *      <div class="formgen_label">{{label}}</div>
-     *      <div class="formgen_inputs">{{inputs}}</div>
+     *      <div class="formgen_inputs">
+     *          {{inputs}}
+     *          <p class="formgen_msg"></p>
+     *      </div>
      *  </div>
      */
     function generalWrapper(ele, config) {
@@ -23,6 +26,12 @@ define(['formgen-core'], function(require, exports, module) {
         } else {
             inputsDiv.removeClass("formgen_inputs").addClass("formgen_inputs_nolabel");
         }
+
+        if (config.msg === undefined) {
+            config.msg = true;
+        }
+
+        inputsDiv.append($(doc.createElement("p")).addClass("formgen_msg"));
 
         return div.append(inputsDiv);
     }

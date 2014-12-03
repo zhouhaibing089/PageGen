@@ -35,10 +35,8 @@ define(['util'], function(require, exports, module) {
      * add the common attrbutes to the element
      */
     FG.attr = function(ele, cfg) {
-        ele.attr("id", cfg.id);
-        ele.addClass(cfg["class"]);
-        ele.attr("type", cfg.type);
-        ele.attr("name", cfg.name);
+        ele.attr("id", cfg.id).addClass(cfg["class"]).attr("type", 
+            cfg.type).attr("name", cfg.name);
     }
 
     /*
@@ -74,10 +72,8 @@ define(['util'], function(require, exports, module) {
             p.append(form);
         }
         /* add form attributes */
-        form.attr("id", this.config.formId);
-        form.addClass(this.config.formClass);
-        form.attr("method", this.config.method);
-        form.attr("action", this.config.action);
+        form.attr("id", this.config.formId).addClass(this.config.formClass)
+            .attr("method", this.config.method).attr("action", this.config.action);
 
         var index = 0;
 
@@ -107,6 +103,8 @@ define(['util'], function(require, exports, module) {
 
         process(index);
     };
+
+    FGP.submit
 
     return FG;
 });

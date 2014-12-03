@@ -1,6 +1,11 @@
-define(['formgen-core'], function(require, exports, module) {
+/**
+ * This module registers basic component for FG.
+ *
+ * Created by zhb on 2014/12/02
+ */
+define(['formgen/core'], function(require, exports, module) {
     // the formgen-core module
-    var FG = require('formgen-core');
+    var FG = require('formgen/core');
     // the alias of document
     var doc = document;
 

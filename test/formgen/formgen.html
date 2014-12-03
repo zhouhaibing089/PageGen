@@ -12,26 +12,26 @@
         "base": "../../src/"
     });
 
-    seajs.use(["formgen-basic", "formgen-wrapper"], function(FormGenerator) {
+    seajs.use(["formgen/basic", "formgen/wrapper"], function(FormGenerator) {
 
     	var config = {
     		"inputs": [
     			{
     				"type": "hidden",
-    				"name": "hidden"
+    				"name": "a"
     			},
     			{
     				"type": "text",
-    				"name": "text",
+    				"name": "b",
     				"label": "name",
-    				"frozen": true,
     				"wrapper": "general"
     			}
     		]
     	};
 
     	var value = {
-    		"text": "text"
+    		"a": "a",
+            "b": "b"
     	};
 
     	var fg = new FormGenerator(config, value);
