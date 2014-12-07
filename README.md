@@ -6,6 +6,7 @@ A simple tool to generate page.. Currently we provide configurations to generate
 ### Contact
 
 email: zhouhaibing089@gmail.com
+
 site: www.zhouhaibing.com
 
 
