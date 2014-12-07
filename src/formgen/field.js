@@ -5,7 +5,7 @@
  */
 define(['formgen/check'], function(require, exports, module) {
     // the formgen-check module
-    var check = require('formgen/check');
+    var CHECK = require('formgen/check');
 
     // the alias of document
     var doc = document;
@@ -13,17 +13,19 @@ define(['formgen/check'], function(require, exports, module) {
     /*
      * add the common attrbutes to the element
      */
-    exports.attr = function(ele, cfg) {
+    var addAttr = function(ele, cfg) {
         $(ele).attr("id", cfg.id).addClass(cfg["class"]).attr("type",
             cfg.type).attr("name", cfg.name);
-    }
+    };
+
+    exports.addAttr = addAttr;
 
     /*
      * set value, and set to be disabled when frozen is true
      *
      * the element needs to provide two functions, fg_val and fg_frozen
      */
-    exports.val = function(ele, val, frozen) {
+    var setValue = function(ele, val, frozen) {
         if (val === null) {
             return ;
         }
@@ -31,7 +33,9 @@ define(['formgen/check'], function(require, exports, module) {
         if (frozen === true) {
             ele.fg_frozen();
         }
-    }
+    };
+
+    exports.setValue = setValue;
 
     // get text input
     exports.text = function(cfg, val, callback) {
@@ -52,9 +56,30 @@ define(['formgen/check'], function(require, exports, module) {
             return $(ret).val();
         };
         // set the attributes
-        this.attr(ret, cfg);
+        addAttr(ret, cfg);
         // set value
-        this.val(ret, val, cfg.frozen);
+        setValue(ret, val, cfg.frozen);
+
+        // trigger the check
+        $(ret).focusout(function() {
+            ret.check(function(result) {
+                if (result.success === false) {
+                    ret.fg_msg(result.message);
+                }
+            });
+        });
+        // restore the initial state
+        $(ret).focusin(function() {
+            ret.fg_msg("");
+        });
+        // the fg_size function used in fg_range check module
+        ret.fg_size = function() {
+            return $.trim($(ret).val()).length;
+        };
+        // the check function
+        ret.check = function(callback) {
+            CHECK.fg_range(ret, cfg, callback);
+        };
         // return
         callback(ret, cfg);
     };

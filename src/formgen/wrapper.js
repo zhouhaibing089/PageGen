@@ -1,22 +1,18 @@
-define(['formgen/core'], function(require, exports, module) {
-    var FG = require('formgen/core');
+define(function(require, exports, module) {
     // alias
     var doc = document;
-    
-    // register wrapper
-    FG.registerWrapper("common", common);
 
     /**
      * the common wrapper
      *  <div class="formgen">
-     *      <div class="formgen_label">{{label}}</div>
+     *      <label class="formgen_label">{{label}}</label>
      *      <div class="formgen_inputs">
      *          {{inputs}}
      *          <p class="formgen_msg"></p>
      *      </div>
      *  </div>
      */
-    function common(ele, config) {
+    exports.common = function(ele, config) {
         var defaultConfig = {
             msg: true
         };
@@ -46,5 +42,5 @@ define(['formgen/core'], function(require, exports, module) {
         }
 
         return $(mainDiv).addClass("formgen clearfix").append(fieldDiv);
-    }
+    };
 });

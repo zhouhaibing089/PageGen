@@ -12,7 +12,7 @@
         "base": "../../src/"
     });
 
-    seajs.use(["formgen/field", "formgen/wrapper"], function(FormGenerator) {
+    seajs.use(["formgen/index"], function(FormGenerator) {
 
     	var config = {
     		"fields": [
@@ -24,7 +24,9 @@
     				"type": "text",
     				"name": "b",
     				"label": "name",
-    				"wrapper": "common"
+    				"wrapper": "common",
+                    "min": 5,
+                    "max": 10
     			}
     		]
     	};

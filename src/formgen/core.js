@@ -31,7 +31,7 @@ define(['util'], function(require, exports, module) {
     /* register a new wrapper for given type */
     FG.registerWrapper = function(type, wrapper) {
         wrappers[type] = wrapper;
-    }
+    };
 
     // FGP variable
     var FGP = FG.prototype;
@@ -56,7 +56,7 @@ define(['util'], function(require, exports, module) {
 
         // currently building field index
         var index = 0;
-        // callback function when we build a filed
+        // callback function when we build a field
         var cb = function(ele, config) {
             self.fields.push(ele);
             
@@ -80,6 +80,11 @@ define(['util'], function(require, exports, module) {
             }
 
             var field = self.config.fields[index];
+            var handler = handlers[field.type];
+
+            if (handler === undefined) {
+                debug
+            }
             handlers[field.type](field, self.value.get(field.name), cb);
         };
 
@@ -94,10 +99,10 @@ define(['util'], function(require, exports, module) {
         var data = {};
 
         this.fields.forEach(function(field) {
-            if (field.value === undefined) {
+            if (field.fg_val === undefined) {
                 return;
             }
-            data[field.name] = field.value();
+            data[field.name] = field.fg_val();
         });
 
         data = $.extend(data, param);
@@ -114,6 +119,21 @@ define(['util'], function(require, exports, module) {
             },
             "error": function() {
                 debug.log("submit error");
+            }
+        });
+    };
+
+    /*
+     * the check function
+     */
+    FGP.check = function(callback) {
+        this.fields.forEach(function(field) {
+            // if it is a function
+            if (typeof(field) === "function") {
+                field = field();
+            }
+            if (field !== null) {
+                field.fg_check(callback);
             }
         });
     };
