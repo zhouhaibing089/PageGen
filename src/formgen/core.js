@@ -6,19 +6,21 @@ define(['util'], function(require, exports, module) {
     var util = require("util");
 
     // module variable
-    /* extension point, produce inputs */
+    /* extension point, produce fields */
     var handlers = {};
-    /* extension point, wrapper the produced inputs */
+    /* extension point, wrapper the produced fields */
     var wrappers = {};
 
     var doc = document;
-
 
     // FG variable 
     var FG = function(config, value) {
         var args = arguments;
         this.config = args.length > 0 ? args[0] : {};
         this.value = args.length > 1 ? args[1] : {};
+
+        // the fields
+        this.fields = [];
     };
 
     /* register a new handler for given type */
@@ -31,28 +33,6 @@ define(['util'], function(require, exports, module) {
         wrappers[type] = wrapper;
     }
 
-    /*
-     * add the common attrbutes to the element
-     */
-    FG.attr = function(ele, cfg) {
-        ele.attr("id", cfg.id).addClass(cfg["class"]).attr("type", 
-            cfg.type).attr("name", cfg.name);
-    }
-
-    /*
-     * set value, and set to be disabled when frozen is true
-     */
-    FG.val = function(ele, val, frozen) {
-        if (val === undefined) {
-            return ;
-        }
-        ele.val(val);
-        if (frozen === true) {
-            ele.frozen();
-        }
-    }
-
-
     // FGP variable
     var FGP = FG.prototype;
 
@@ -62,49 +42,81 @@ define(['util'], function(require, exports, module) {
      * when the build work is done.
      */
     FGP.build = function(p, callback) {
-        if (!(p instanceof jQuery)) {
-            p = $(p);
-        }
-        
-        var form = $(doc.createElement("form"));
+        var self = this;
+
+        var form = doc.createElement("form");
+        this.form = form;
         /* insert into dom */
         if (p) {
-            p.append(form);
+            $(p).append(form);
         }
         /* add form attributes */
-        form.attr("id", this.config.formId).addClass(this.config.formClass)
+        $(form).attr("id", this.config.formId).addClass(this.config.formClass)
             .attr("method", this.config.method).attr("action", this.config.action);
 
+        // currently building field index
         var index = 0;
-
+        // callback function when we build a filed
         var cb = function(ele, config) {
+            self.fields.push(ele);
+            
             if (config.wrapper === undefined) {
-                form.append(ele);
+                $(form).append(ele);
             } else {
-                form.append(wrappers[config.wrapper](ele, config));
+                $(form).append(wrappers[config.wrapper](ele, config));
             }
+
+            // go on with the next
             process(++index);
         };
-
-        var that = this;
-
+        // build the given index-specified field
         var process = function(index) {
             // done
-            if (index === that.config.inputs.length) {
+            if (index === self.config.fields.length) {
                 if (callback !== undefined) {
                     callback(form);
                 }
                 return ;
             }
 
-            var input = that.config.inputs[index];
-            handlers[input.type](input, that.value.get(input.name), cb);
+            var field = self.config.fields[index];
+            handlers[field.type](field, self.value.get(field.name), cb);
         };
 
         process(index);
     };
 
-    FGP.submit
+    /**
+     * the submit function, the first parameter is the extra parameters,
+     * the second parameter is the callback function after submit.
+     */
+    FGP.submit = function(param, callback) {
+        var data = {};
+
+        this.fields.forEach(function(field) {
+            if (field.value === undefined) {
+                return;
+            }
+            data[field.name] = field.value();
+        });
+
+        data = $.extend(data, param);
+
+        var self = this;
+
+        $.ajax({
+            "url": self.attr("action") ? self.attr("action") : location.href,
+            "type": self.attr("method") ? self.attr("method") : "POST",
+            "data": data,
+            "cache": false,
+            "success": function(data) {
+                callback(data);
+            },
+            "error": function() {
+                debug.log("submit error");
+            }
+        });
+    };
 
     return FG;
 });

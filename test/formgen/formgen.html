@@ -12,10 +12,10 @@
         "base": "../../src/"
     });
 
-    seajs.use(["formgen/basic", "formgen/wrapper"], function(FormGenerator) {
+    seajs.use(["formgen/field", "formgen/wrapper"], function(FormGenerator) {
 
     	var config = {
-    		"inputs": [
+    		"fields": [
     			{
     				"type": "hidden",
     				"name": "a"
@@ -24,7 +24,7 @@
     				"type": "text",
     				"name": "b",
     				"label": "name",
-    				"wrapper": "general"
+    				"wrapper": "common"
     			}
     		]
     	};

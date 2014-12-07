@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FormGen Test</title>
+    <script src="../../lib/jquery-1.11.1.js"></script>
+    <script src="../../lib/sea.js"></script>
+</head>
+<body>
+	<div id="container">
+        <table>
+            <thead>
+                <th>test</th>
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+            </tbody>
+        </table>   
+    </div>
+    <script>
+        var tr = document.querySelector("#container tbody tr");
+        var td = document.createElement("td");
+        td.appendChild(document.createTextNode("<script>alert(1)</" + "script>"));
+        tr.appendChild(td);
+    </script>
+</body>
+</html>

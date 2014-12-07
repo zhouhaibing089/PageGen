@@ -4,10 +4,10 @@ define(['formgen/core'], function(require, exports, module) {
     var doc = document;
     
     // register wrapper
-    FG.registerWrapper("general", generalWrapper);
+    FG.registerWrapper("common", common);
 
     /**
-     * the general wrapper
+     * the common wrapper
      *  <div class="formgen">
      *      <div class="formgen_label">{{label}}</div>
      *      <div class="formgen_inputs">
@@ -16,23 +16,35 @@ define(['formgen/core'], function(require, exports, module) {
      *      </div>
      *  </div>
      */
-    function generalWrapper(ele, config) {
-        var div = $(doc.createElement("div")).addClass("formgen clearfix");
-        var inputsDiv = $(doc.createElement("div")).addClass("formgen_inputs").append(ele);
+    function common(ele, config) {
+        var defaultConfig = {
+            msg: true
+        };
 
-        if (config.label != undefined) {
-            div.append($(doc.createElement("div")).addClass("formgen_label").append(
-                $(doc.createElement("label")).append(config.label)));
-        } else {
-            inputsDiv.removeClass("formgen_inputs").addClass("formgen_inputs_nolabel");
+        config = $.extend(config, defaultConfig);
+
+        var mainDiv = doc.createElement("div");
+        var fieldDiv = doc.createElement("div");
+
+        $(fieldDiv).addClass("formgen_inputs").append(ele);
+
+        if (config.label !== undefined) {
+            var label = doc.createElement("label");
+            $(mainDiv).append($(label).addClass("formgen_label").text(config.label));
         }
 
-        if (config.msg === undefined) {
-            config.msg = true;
+        if (config.msg === true) {
+            var p = doc.createElement("p");
+            $(fieldDiv).append($(p).addClass("formgen_msg"));
+
+            ele.fg_msg = function() {
+                if (arguments.length > 0) {
+                    $(p).text(arguments[0]);
+                }
+                return $(p).text();
+            };
         }
 
-        inputsDiv.append($(doc.createElement("p")).addClass("formgen_msg"));
-
-        return div.append(inputsDiv);
+        return $(mainDiv).addClass("formgen clearfix").append(fieldDiv);
     }
 });
