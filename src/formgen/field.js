@@ -55,6 +55,10 @@ define(['formgen/check'], function(require, exports, module) {
             }
             return $(ret).val();
         };
+        // the message function
+        ret.fg_msg = function(message) {
+            alert(message);
+        };
         // set the attributes
         addAttr(ret, cfg);
         // set value
