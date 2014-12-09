@@ -81,7 +81,7 @@ define(['formgen/check'], function(require, exports, module) {
             return $.trim($(ret).val()).length;
         };
         // the check function
-        ret.check = function(callback) {
+        ret.fg_check = function(callback) {
             CHECK.fg_range(ret, cfg, callback);
         };
         // return
@@ -90,7 +90,28 @@ define(['formgen/check'], function(require, exports, module) {
 
     exports.select = function(cfg, val, callback) {
         var ret = doc.createElement("select");
-
+        cfg.options.forEach(function(opt) {
+            var option = doc.createElement("option");
+            $(option).attr("value", opt.value).text(opt.text);
+            $(ret).append(option);
+        });
+        ret.fg_val = function() {
+            if (arguments.length > 0) {
+                $(ret).val(arguments[0]);
+            }
+            return $(ret).val();
+        };
+        ret.fg_frozen = function() {
+            $(ret).attr("disabled", true);
+        };
+        // set the attributes
+        addAttr(ret, cfg);
+        // set value
+        setValue(ret, val, cfg.frozen);
         callback(ret, cfg);
     };
+
+    exports.fg_val = function() {
+
+    }
 });

@@ -58,6 +58,11 @@ define(['util'], function(require, exports, module) {
         var index = 0;
         // callback function when we build a field
         var cb = function(ele, config) {
+            // no result
+            if (ele === null) {
+                return process(++index);
+            }
+
             self.fields.push(ele);
             
             if (config.wrapper === undefined) {
@@ -83,9 +88,10 @@ define(['util'], function(require, exports, module) {
             var handler = handlers[field.type];
 
             if (handler === undefined) {
-                debug
+                cb(null, field);
+            } else {
+                handlers[field.type](field, self.value.get(field.name), cb);
             }
-            handlers[field.type](field, self.value.get(field.name), cb);
         };
 
         process(index);
@@ -118,7 +124,7 @@ define(['util'], function(require, exports, module) {
                 callback(data);
             },
             "error": function() {
-                debug.log("submit error");
+                console.log("submit error");
             }
         });
     };
@@ -128,11 +134,7 @@ define(['util'], function(require, exports, module) {
      */
     FGP.check = function(callback) {
         this.fields.forEach(function(field) {
-            // if it is a function
-            if (typeof(field) === "function") {
-                field = field();
-            }
-            if (field !== null) {
+            if (field != null) {
                 field.fg_check(callback);
             }
         });

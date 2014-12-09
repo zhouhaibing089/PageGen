@@ -18,22 +18,39 @@
     		"fields": [
     			{
     				"type": "hidden",
-    				"name": "a"
+    				"name": "id"
     			},
     			{
     				"type": "text",
-    				"name": "b",
-    				"label": "name",
+    				"name": "name",
+    				"label": "Name:",
     				"wrapper": "common",
                     "min": 5,
                     "max": 10
-    			}
+    			},
+                {
+                    "type": "select",
+                    "options": [
+                        {
+                            "value": 1,
+                            "text": "Female"
+                        },
+                        {
+                            "value": 2,
+                            "text": "Male"
+                        }
+                    ],
+                    "name": "sex",
+                    "label": "Sex:",
+                    "wrapper": "common"
+                }
     		]
     	};
 
     	var value = {
-    		"a": "a",
-            "b": "b"
+    		"id": 24,
+            "name": "Kobe Bryant",
+            "sex": 2
     	};
 
     	var fg = new FormGenerator(config, value);

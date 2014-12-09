@@ -16,8 +16,7 @@ define(function(require, exports, module) {
      */
     exports.common = function(ele, config) {
         var defaultConfig = {
-            msg: true,
-            required: true
+            msg: true
         };
 
         config = $.extend(defaultConfig, config);
