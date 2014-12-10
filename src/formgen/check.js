@@ -13,7 +13,6 @@ define(function(require, exports, module) {
         }
     };
 
-
     /*
      * range check
      */
