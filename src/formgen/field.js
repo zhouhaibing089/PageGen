@@ -19,14 +19,19 @@ define(['formgen/check', 'formgen/field-util'], function(require, exports, modul
         } else {
             var ret = doc.createElement("input");
         }
-        // use default functions
-        fieldUtil.addFuncs(ret);
         // set the attributes
         fieldUtil.addAttr(ret, cfg);
         // set value
         fieldUtil.setValue(ret, val, cfg.frozen);
 
-        // the fg_size function used in fg_range check module
+        // the default message function
+        ret.fg_msg = function(message) {
+            if (message) {
+                alert(message);
+            }
+        };
+
+        // the fg_size function used in fg_range function
         ret.fg_size = function() {
             return $.trim($(ret).val()).length;
         };
@@ -37,11 +42,7 @@ define(['formgen/check', 'formgen/field-util'], function(require, exports, modul
 
         // trigger the check
         $(ret).focusout(function() {
-            ret.fg_check(function(result) {
-                if (result.success === false) {
-                    ret.fg_msg(result.message);
-                }
-            });
+            ret.fg_check();
         });
         // restore the initial state
         $(ret).focusin(function() {
@@ -60,8 +61,6 @@ define(['formgen/check', 'formgen/field-util'], function(require, exports, modul
             $(ret).append(option);
         });
 
-        // add functions on the given field
-        fieldUtil.addFuncs(ret);
         // set the attributes
         fieldUtil.addAttr(ret, cfg);
         // set value

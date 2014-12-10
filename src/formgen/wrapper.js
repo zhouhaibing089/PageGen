@@ -10,6 +10,7 @@ define(function(require, exports, module) {
      *          {{inputs}}
      *          <!-- only used when config.required === true -->
      *          <span class="formgen_star">*</span>
+     *          <span class="formgen_tip">{{tip}}</span>
      *          <p class="formgen_msg"></p>
      *      </div>
      *  </div>
@@ -26,13 +27,19 @@ define(function(require, exports, module) {
 
         $(fieldDiv).addClass("formgen_inputs").append(ele);
 
-        if (config.required === true) {
+        if (config.star === true) {
             $(fieldDiv).append($("<span>").addClass("formgen_star").text("*"));
+        }
+
+        if (config.tip) {
+            $(fieldDiv).append($("<span>").addClass("formgen_tip")
+                .text(config.tip));
         }
 
         if (config.label !== undefined) {
             var label = doc.createElement("label");
-            $(mainDiv).append($(label).addClass("formgen_label").text(config.label));
+            $(mainDiv).append($(label).addClass("formgen_label").
+                text(config.label));
         }
 
         if (config.msg === true) {

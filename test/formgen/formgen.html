@@ -4,6 +4,7 @@
     <title>FormGen Test</title>
     <script src="../../lib/jquery-1.11.1.js"></script>
     <script src="../../lib/sea.js"></script>
+    <link href="formgen.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container"></div>
@@ -12,50 +13,61 @@
         "base": "../../src/"
     });
 
+    // test case
+    var config = {
+        "fields": [
+            {
+                "type": "hidden",
+                "name": "id"
+            },
+            {
+                "type": "text",
+                "name": "name",
+                "label": "Name:",
+                "wrapper": "common",
+                "min": 5,
+                "max": 10,
+                "tip": "5-10字",
+                "star": true
+            },
+            {
+                "type": "select",
+                "options": [
+                    {
+                        "value": 1,
+                        "text": "Female"
+                    },
+                    {
+                        "value": 2,
+                        "text": "Male"
+                    }
+                ],
+                "name": "sex",
+                "label": "Sex:",
+                "wrapper": "common"
+            },
+            {
+                "type": "textarea",
+                "name": "desc",
+                "label": "Description:",
+                "wrapper": "common"
+            }
+        ]
+    };
+
+    var value = {
+        "id": 24,
+        "name": "Kobe Bryant",
+        "sex": 2
+    };
+
+    var fg;
+
     seajs.use(["formgen/index"], function(FormGenerator) {
 
-    	var config = {
-    		"fields": [
-    			{
-    				"type": "hidden",
-    				"name": "id"
-    			},
-    			{
-    				"type": "text",
-    				"name": "name",
-    				"label": "Name:",
-    				"wrapper": "common",
-                    "min": 5,
-                    "max": 10
-    			},
-                {
-                    "type": "select",
-                    "options": [
-                        {
-                            "value": 1,
-                            "text": "Female"
-                        },
-                        {
-                            "value": 2,
-                            "text": "Male"
-                        }
-                    ],
-                    "name": "sex",
-                    "label": "Sex:",
-                    "wrapper": "common"
-                }
-    		]
-    	};
-
-    	var value = {
-    		"id": 24,
-            "name": "Kobe Bryant",
-            "sex": 2
-    	};
-
-    	var fg = new FormGenerator(config, value);
-
+        fg = new FormGenerator(config, value);
     	fg.build($("#container"));
+
     });
     </script>
 </body>

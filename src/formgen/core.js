@@ -13,7 +13,7 @@ define(['util'], function(require, exports, module) {
 
     var doc = document;
 
-    // FG variable 
+    // FG variable
     var FG = function(config, value) {
         var args = arguments;
         this.config = args.length > 0 ? args[0] : {};
@@ -64,7 +64,7 @@ define(['util'], function(require, exports, module) {
             }
 
             self.fields.push(ele);
-            
+
             if (config.wrapper === undefined) {
                 $(form).append(ele);
             } else {
@@ -112,16 +112,20 @@ define(['util'], function(require, exports, module) {
         });
 
         data = $.extend(data, param);
+        console.log(data);
 
-        var self = this;
+        var form = $(this.form);
 
         $.ajax({
-            "url": self.attr("action") ? self.attr("action") : location.href,
-            "type": self.attr("method") ? self.attr("method") : "POST",
+            "url": form.attr("action") ? form.attr("action") : location.href,
+            "type": form.attr("method") ? form.attr("method") : "POST",
             "data": data,
             "cache": false,
             "success": function(data) {
-                callback(data);
+                console.log(data);
+                if (callback !== undefined) {
+                    callback(data);
+                }
             },
             "error": function() {
                 console.log("submit error");
@@ -133,11 +137,37 @@ define(['util'], function(require, exports, module) {
      * the check function
      */
     FGP.check = function(callback) {
-        this.fields.forEach(function(field) {
-            if (field != null) {
-                field.fg_check(callback);
+        var self = this;
+        var pass = true;
+        var index = 0;
+
+        // to avoid `undefined is not a function problem`
+        if (callback === undefined) {
+            callback = new Function();
+        }
+
+        var cb = function(message) {
+            if (message.success === false) {
+                pass = false;
             }
-        });
+            check(++index);
+        }
+
+        var check = function(index) {
+            // done
+            if (index === self.fields.length) {
+                callback(pass);
+                return;
+            }
+            var field = self.fields[index];
+            if (field && field.fg_check) {
+                self.fields[index].fg_check(cb);
+            } else {
+                cb({success: true});
+            }
+        };
+
+        check(0);
     };
 
     return FG;

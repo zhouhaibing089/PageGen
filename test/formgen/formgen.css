@@ -1,0 +1,22 @@
+.formgen_label, .formgen_inputs {
+    display: inline-block;
+}
+
+.formgen_label {
+    text-align: right;
+    width: 38%;
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+.formgen_msg {
+    color: red;
+    margin: 3px 0px;
+    height: 20px;
+    font-size: 14px;
+}
+
+.formgen_star {
+    color: red;
+    margin: 0px 5px;
+}

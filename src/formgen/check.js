@@ -3,6 +3,17 @@
  */
 define(function(require, exports, module) {
 
+    // the wrapper of callback function
+    var cb = function(field, result, callback) {
+        if (result.success === false) {
+            field.fg_msg(result.message);
+        }
+        if (callback !== undefined) {
+            callback(result);
+        }
+    };
+
+
     /*
      * range check
      */
@@ -18,25 +29,31 @@ define(function(require, exports, module) {
 
         // if the target field does not provide the fg_size function
         if (field.fg_size === undefined) {
-            return callback({ success: false, message: "未提供fg_size函数" });
+            cb(field, { success: false, message: "未提供fg_size函数" },
+                callback);
+            return;
         }
         var size = field.fg_size();
 
         if (size === 0) {
             if (config.required === true) {
-                return callback({ success: false, message: config.requiredMsg });
+                cb(field, { success: false, message: config.requiredMsg },
+                    callback);
+                return;
             }
         }
 
         if (config.max !== undefined && config.max < size) {
-            return callback({ success: false, message: config.maxMsg });
+            cb(field, { success: false, message: config.maxMsg }, callback);
+            return;
         }
 
         if (config.min !== undefined && config.min > size) {
-            return callback({ success: false, message: config.minMsg });
+            cb(field, { success: false, message: config.minMsg }, callback);
+            return;
         }
 
-        return callback({ success: true });
+        cb(field, { success: true }, callback);
     };
 
     /*
