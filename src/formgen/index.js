@@ -1,7 +1,7 @@
 /**
  * Created by zhb on 12/7/14.
  */
-define(['formgen/core', 'formgen/field', 'formgen/wrapper'], function(require, exports, module) {
+define(['./core', './field', './wrapper'], function(require, exports, module) {
 
     var FG = require('formgen/core');
     var FIELD = require('formgen/field');

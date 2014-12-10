@@ -1,7 +1,7 @@
 /**
  * Created by zhb on 12/02/2014
  */
-define(['util'], function(require, exports, module) {
+define(['../util'], function(require, exports, module) {
 
     var util = require("util");
 
@@ -41,15 +41,13 @@ define(['util'], function(require, exports, module) {
      * will be inserted into. and the second argument is the callback function
      * when the build work is done.
      */
-    FGP.build = function(p, callback) {
+    FGP.build = function(form, callback) {
         var self = this;
 
-        var form = doc.createElement("form");
-        this.form = form;
-        /* insert into dom */
-        if (p) {
-            $(p).append(form);
+        if (form == null) {
+            form = doc.createElement("form");
         }
+        this.form = form;
         /* add form attributes */
         $(form).attr("id", this.config.formId).addClass(this.config.formClass)
             .attr("method", this.config.method).attr("action", this.config.action);

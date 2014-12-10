@@ -3,7 +3,7 @@
  *
  * Created by zhb on 2014/12/02
  */
-define(['formgen/check', 'formgen/field-util'], function(require, exports, module) {
+define(['./check', './field-util'], function(require, exports, module) {
     // the check module
     var check = require('formgen/check');
     // the field-util module
@@ -67,6 +67,11 @@ define(['formgen/check', 'formgen/field-util'], function(require, exports, modul
         fieldUtil.setValue(ret, val, cfg.frozen);
 
         callback(ret, cfg);
+    };
+
+    // get checkbox field
+    exports.checkbox = function(cfg, val, callback) {
+
     };
 
 

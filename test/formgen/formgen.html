@@ -66,7 +66,9 @@
     seajs.use(["formgen/index"], function(FormGenerator) {
 
         fg = new FormGenerator(config, value);
-    	fg.build($("#container"));
+    	fg.build(null, function(form) {
+            $("#container").append(form);
+        });
 
     });
     </script>
