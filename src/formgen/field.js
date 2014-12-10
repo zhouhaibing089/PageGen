@@ -121,6 +121,10 @@ define(['./check', './field-util'], function(require, exports, module) {
 
             return value;
         };
+        // the frozen function
+        ret.fg_frozen = function() {
+            $(ret).find('[name="'+ cfg.name + '"]').attr("disabled", true);
+        };
         // set the value
         fieldUtil.setValue(ret, val, cfg.frozen);
 
