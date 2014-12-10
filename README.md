@@ -7,7 +7,7 @@ A simple tool to generate page.. Currently we provide configurations to generate
 
 This component is used to generate form, and it is provided to support **submit**, **validate** functionality, and it is well designed to let you extend its functionality..
 
-!(formgen_screenshot)[https://raw.githubusercontent.com/zhouhaibing089/PageGen/master/screenshot/formgen.png]
+![formgen_screenshot](https://raw.githubusercontent.com/zhouhaibing089/PageGen/master/screenshot/formgen.png)
 
 ### Contact
 
