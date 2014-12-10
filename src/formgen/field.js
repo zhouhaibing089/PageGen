@@ -3,70 +3,41 @@
  *
  * Created by zhb on 2014/12/02
  */
-define(['formgen/check'], function(require, exports, module) {
-    // the formgen-check module
-    var CHECK = require('formgen/check');
+define(['formgen/check', 'formgen/field-util'], function(require, exports, module) {
+    // the check module
+    var check = require('formgen/check');
+    // the field-util module
+    var fieldUtil = require('formgen/field-util');
 
     // the alias of document
     var doc = document;
 
-    /*
-     * add the common attrbutes to the element
-     */
-    var addAttr = function(ele, cfg) {
-        $(ele).attr("id", cfg.id).addClass(cfg["class"]).attr("type",
-            cfg.type).attr("name", cfg.name);
-    };
-
-    exports.addAttr = addAttr;
-
-    /*
-     * set value, and set to be disabled when frozen is true
-     *
-     * the element needs to provide two functions, fg_val and fg_frozen
-     */
-    var setValue = function(ele, val, frozen) {
-        if (val === null) {
-            return ;
-        }
-        ele.fg_val(val);
-        if (frozen === true) {
-            ele.fg_frozen();
-        }
-    };
-
-    exports.setValue = setValue;
-
-    // get text input
+    // get text field
     exports.text = function(cfg, val, callback) {
         if (cfg.type === "textarea") {
             var ret = doc.createElement("textarea");
         } else {
             var ret = doc.createElement("input");
         }
-        // set the frozen function
-        ret.fg_frozen = function() {
-            $(ret).attr("disabled", true);
-        };
-        // set the value function
-        ret.fg_val = function() {
-            if (arguments.length > 0) {
-                $(ret).val(arguments[0]);
-            }
-            return $(ret).val();
-        };
-        // the message function
-        ret.fg_msg = function(message) {
-            alert(message);
-        };
+        // use default functions
+        fieldUtil.addFuncs(ret);
         // set the attributes
-        addAttr(ret, cfg);
+        fieldUtil.addAttr(ret, cfg);
         // set value
-        setValue(ret, val, cfg.frozen);
+        fieldUtil.setValue(ret, val, cfg.frozen);
+
+        // the fg_size function used in fg_range check module
+        ret.fg_size = function() {
+            return $.trim($(ret).val()).length;
+        };
+        // the check function
+        ret.fg_check = function(callback) {
+            check.fg_range(ret, cfg, callback);
+        };
 
         // trigger the check
         $(ret).focusout(function() {
-            ret.check(function(result) {
+            ret.fg_check(function(result) {
                 if (result.success === false) {
                     ret.fg_msg(result.message);
                 }
@@ -76,18 +47,11 @@ define(['formgen/check'], function(require, exports, module) {
         $(ret).focusin(function() {
             ret.fg_msg("");
         });
-        // the fg_size function used in fg_range check module
-        ret.fg_size = function() {
-            return $.trim($(ret).val()).length;
-        };
-        // the check function
-        ret.fg_check = function(callback) {
-            CHECK.fg_range(ret, cfg, callback);
-        };
         // return
         callback(ret, cfg);
     };
 
+    // get select field
     exports.select = function(cfg, val, callback) {
         var ret = doc.createElement("select");
         cfg.options.forEach(function(opt) {
@@ -95,23 +59,16 @@ define(['formgen/check'], function(require, exports, module) {
             $(option).attr("value", opt.value).text(opt.text);
             $(ret).append(option);
         });
-        ret.fg_val = function() {
-            if (arguments.length > 0) {
-                $(ret).val(arguments[0]);
-            }
-            return $(ret).val();
-        };
-        ret.fg_frozen = function() {
-            $(ret).attr("disabled", true);
-        };
+
+        // add functions on the given field
+        fieldUtil.addFuncs(ret);
         // set the attributes
-        addAttr(ret, cfg);
+        fieldUtil.addAttr(ret, cfg);
         // set value
-        setValue(ret, val, cfg.frozen);
+        fieldUtil.setValue(ret, val, cfg.frozen);
+
         callback(ret, cfg);
     };
 
-    exports.fg_val = function() {
 
-    }
 });
