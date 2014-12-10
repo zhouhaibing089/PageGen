@@ -3,16 +3,17 @@
  */
 define(['./core', './field', './wrapper'], function(require, exports, module) {
 
-    var FG = require('formgen/core');
-    var FIELD = require('formgen/field');
-    var WRAPPER = require('formgen/wrapper');
+    var fg = require('formgen/core');
+    var field = require('formgen/field');
+    var wrapper = require('formgen/wrapper');
 
-    FG.registerHandler("text", FIELD.text);
-    FG.registerHandler("textarea", FIELD.text);
-    FG.registerHandler("hidden", FIELD.text);
-    FG.registerHandler("select", FIELD.select);
+    fg.registerHandler("text", field.text);
+    fg.registerHandler("textarea", field.text);
+    fg.registerHandler("hidden", field.text);
+    fg.registerHandler("select", field.select);
+    fg.registerHandler("checkbox", field.checkbox);
 
-    FG.registerWrapper("common", WRAPPER.common);
+    fg.registerWrapper("common", wrapper.common);
 
-    return FG;
+    return fg;
 });

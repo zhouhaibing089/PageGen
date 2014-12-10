@@ -24,7 +24,7 @@ define(function(require, exports, module) {
             minMsg: "范围太小"
         };
 
-        config = $.extend(config, defaultConfig);
+        config = $.extend(defaultConfig, config);
 
         // if the target field does not provide the fg_size function
         if (field.fg_size === undefined) {

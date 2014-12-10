@@ -50,7 +50,38 @@
                 "type": "textarea",
                 "name": "desc",
                 "label": "Description:",
-                "wrapper": "common"
+                "wrapper": "common",
+                "star": true,
+                "tip": "简单介绍一下自己"
+            },
+            {
+                "type": "checkbox",
+                "name": "hobby",
+                "label": "Hobbies:",
+                "options": [
+                    {
+                        "value": 1,
+                        "text": "Basketball"
+                    },
+                    {
+                        "value": 2,
+                        "text": "Football"
+                    },
+                    {
+                        "value": 3,
+                        "text": "Movie"
+                    },
+                    {
+                        "value": 4,
+                        "text": "Music"
+                    }
+                ],
+                "wrapper": "common",
+                "star": true,
+                "tip": "1-3个",
+                "max": 3,
+                "maxMsg": "最多只能勾选3个",
+                "requiredMsg": "至少要勾选1个哦"
             }
         ]
     };
@@ -58,7 +89,8 @@
     var value = {
         "id": 24,
         "name": "Kobe Bryant",
-        "sex": 2
+        "sex": 2,
+        "hobby": [1]
     };
 
     var fg;
