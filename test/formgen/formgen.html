@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>FormGen Test</title>
     <script src="../../lib/jquery-1.11.1.js"></script>
     <script src="../../lib/sea.js"></script>
     <link href="formgen.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<div id="container"></div>
-    <script>
-    seajs.config({
-        "base": "../../src/"
-    });
 
-    // test case
-    var config = {
-        "fields": [
-            {
+<body>
+    <div id="container"></div>
+    <script>
+        seajs.config({
+            "base": "../../src/"
+        });
+
+        // test case
+        var config = {
+            "fields": [{
                 "type": "hidden",
                 "name": "id"
-            },
-            {
+            }, {
                 "type": "text",
                 "name": "name",
                 "label": "Name:",
@@ -29,80 +29,69 @@
                 "max": 10,
                 "tip": "5-10字",
                 "star": true
-            },
-            {
+            }, {
                 "type": "select",
-                "options": [
-                    {
-                        "value": 1,
-                        "text": "Female"
-                    },
-                    {
-                        "value": 2,
-                        "text": "Male"
-                    }
-                ],
+                "options": [{
+                    "value": 1,
+                    "text": "Female"
+                }, {
+                    "value": 2,
+                    "text": "Male"
+                }],
                 "name": "sex",
                 "label": "Sex:",
                 "wrapper": "common"
-            },
-            {
+            }, {
                 "type": "textarea",
                 "name": "desc",
                 "label": "Description:",
                 "wrapper": "common",
                 "star": true,
                 "tip": "简单介绍一下自己"
-            },
-            {
+            }, {
                 "type": "checkbox",
                 "name": "hobby",
                 "label": "Hobbies:",
-                "options": [
-                    {
-                        "value": 1,
-                        "text": "Basketball"
-                    },
-                    {
-                        "value": 2,
-                        "text": "Football"
-                    },
-                    {
-                        "value": 3,
-                        "text": "Movie"
-                    },
-                    {
-                        "value": 4,
-                        "text": "Music"
-                    }
-                ],
+                "options": [{
+                    "value": 1,
+                    "text": "Basketball"
+                }, {
+                    "value": 2,
+                    "text": "Football"
+                }, {
+                    "value": 3,
+                    "text": "Movie"
+                }, {
+                    "value": 4,
+                    "text": "Music"
+                }],
                 "wrapper": "common",
                 "star": true,
                 "tip": "1-3个",
                 "max": 3,
                 "maxMsg": "最多只能勾选3个",
                 "requiredMsg": "至少要勾选1个哦"
-            }
-        ]
-    };
+            }]
+        };
 
-    var value = {
-        "id": 24,
-        "name": "Kobe Bryant",
-        "sex": 2,
-        "hobby": [1]
-    };
+        var value = {
+            "id": 24,
+            "name": "Kobe Bryant",
+            "sex": 2,
+            "hobby": [1]
+        };
 
-    var fg;
+        var fg;
 
-    seajs.use(["formgen/index"], function(FormGenerator) {
+        seajs.use(["formgen/index"], function(FormGenerator) {
 
-        fg = new FormGenerator(config, value);
-    	fg.build(null, function(form) {
-            $("#container").append(form);
+            fg = new FormGenerator(config, value);
+            fg.build(null, function(form) {
+                $("#container").append(form);
+            });
+
         });
-
-    });
     </script>
 </body>
+
 </html>

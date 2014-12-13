@@ -1,4 +1,6 @@
-define(function(require, exports, module) {
+define(['../lib/handlebars'], function(require, exports, module) {
+    var handlebars = require('../lib/handlebars');
+
     // alias
     var doc = document;
 
@@ -38,8 +40,7 @@ define(function(require, exports, module) {
 
         if (config.label !== undefined) {
             var label = doc.createElement("label");
-            $(mainDiv).append($(label).addClass("formgen_label").
-                text(config.label));
+            $(mainDiv).append($(label).addClass("formgen_label").text(config.label));
         }
 
         if (config.msg === true) {
@@ -58,4 +59,39 @@ define(function(require, exports, module) {
 
         return $(mainDiv).addClass("formgen clearfix").append(fieldDiv);
     };
+
+    /*
+     * the html wrapper, you write the html, and use templates to wrap the
+     * generated field
+     *
+     */
+    exports.html = function(field, config, callback) {
+        var defaultConfig = {
+            msg: true
+        };
+
+        config = $.extend(defaultConfig, config);
+
+        if (callback === undefined) {
+            callback = new Function();
+        }
+
+        var path = config.wrapperPath;
+        var msgClass = config.wrapperMsgClass;
+        $.ajax({
+            url: path,
+            type: "GET",
+            success: function(html) {
+                var fieldHtml = $(field)[0].outerHTML;
+                var data = {
+                    star: config.star,
+                    msg: config.msg,
+                    field: fieldHtml
+                }
+            },
+            fail: function() {
+                callback(false);
+            }
+        })
+    }
 });

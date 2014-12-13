@@ -79,7 +79,7 @@ define(['../util'], function(require, exports, module) {
                 if (callback !== undefined) {
                     callback(form);
                 }
-                return ;
+                return;
             }
 
             var field = self.config.fields[index];
@@ -162,7 +162,9 @@ define(['../util'], function(require, exports, module) {
             if (field && field.fg_check) {
                 self.fields[index].fg_check(cb);
             } else {
-                cb({success: true});
+                cb({
+                    success: true
+                });
             }
         };
 

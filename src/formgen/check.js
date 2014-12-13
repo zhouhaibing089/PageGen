@@ -28,7 +28,10 @@ define(function(require, exports, module) {
 
         // if the target field does not provide the fg_size function
         if (field.fg_size === undefined) {
-            cb(field, { success: false, message: "未提供fg_size函数" },
+            cb(field, {
+                    success: false,
+                    message: "未提供fg_size函数"
+                },
                 callback);
             return;
         }
@@ -36,23 +39,34 @@ define(function(require, exports, module) {
 
         if (size === 0) {
             if (config.required === true) {
-                cb(field, { success: false, message: config.requiredMsg },
+                cb(field, {
+                        success: false,
+                        message: config.requiredMsg
+                    },
                     callback);
                 return;
             }
         }
 
         if (config.max !== undefined && config.max < size) {
-            cb(field, { success: false, message: config.maxMsg }, callback);
+            cb(field, {
+                success: false,
+                message: config.maxMsg
+            }, callback);
             return;
         }
 
         if (config.min !== undefined && config.min > size) {
-            cb(field, { success: false, message: config.minMsg }, callback);
+            cb(field, {
+                success: false,
+                message: config.minMsg
+            }, callback);
             return;
         }
 
-        cb(field, { success: true }, callback);
+        cb(field, {
+            success: true
+        }, callback);
     };
 
     /*

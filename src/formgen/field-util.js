@@ -32,7 +32,7 @@ define(function(require, exports, module) {
         }
 
         if (val === null) {
-            return ;
+            return;
         }
         field.fg_val(val);
         if (frozen === true) {

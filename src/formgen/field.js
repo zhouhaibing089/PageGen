@@ -113,7 +113,7 @@ define(['./check', './field-util'], function(require, exports, module) {
             }
             // get value
             var value = [];
-            $(ret).find('[name="'+ cfg.name + '"]').filter(function() {
+            $(ret).find('[name="' + cfg.name + '"]').filter(function() {
                 return this.checked == true;
             }).each(function() {
                 value.push(this.value);
@@ -123,7 +123,7 @@ define(['./check', './field-util'], function(require, exports, module) {
         };
         // the frozen function
         ret.fg_frozen = function() {
-            $(ret).find('[name="'+ cfg.name + '"]').attr("disabled", true);
+            $(ret).find('[name="' + cfg.name + '"]').attr("disabled", true);
         };
         // set the value
         fieldUtil.setValue(ret, val, cfg.frozen);
