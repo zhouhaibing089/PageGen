@@ -117,7 +117,7 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
             data[name] = field.fg_val();
         });
 
-        data = $.extend(data, param);
+        data = $.extend(param, data);
         console.log(data);
 
         var form = $(this.form);
