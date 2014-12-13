@@ -3,7 +3,9 @@
  *
  * Created by zhb on 2014/12/02
  */
-define(['./check', './field-util'], function(require, exports, module) {
+define(['../lib/jquery', './check', './field-util'], function(require, exports, module) {
+
+    var $ = require("../lib/jquery");
     // the check module
     var check = require('formgen/check');
     // the field-util module

@@ -1,5 +1,7 @@
-define(['../lib/handlebars'], function(require, exports, module) {
-    var handlebars = require('../lib/handlebars');
+define(['../lib/jquery', '../lib/handlebars'], function(require, exports, module) {
+
+    var $ = require("../lib/jquery");
+    var Handlebars = require('../lib/handlebars');
 
     // alias
     var doc = document;
@@ -17,7 +19,7 @@ define(['../lib/handlebars'], function(require, exports, module) {
      *      </div>
      *  </div>
      */
-    exports.common = function(ele, config) {
+    exports.common = function(ele, config, callback) {
         var defaultConfig = {
             msg: true
         };
@@ -46,8 +48,6 @@ define(['../lib/handlebars'], function(require, exports, module) {
         if (config.msg === true) {
             var p = doc.createElement("p");
             $(fieldDiv).append($(p).addClass("formgen_msg"));
-            // delete the original fg_msg function
-            delete ele.fg_msg;
             // assign a new fg_msg function
             ele.fg_msg = function() {
                 if (arguments.length > 0) {
@@ -57,7 +57,13 @@ define(['../lib/handlebars'], function(require, exports, module) {
             };
         }
 
-        return $(mainDiv).addClass("formgen clearfix").append(fieldDiv);
+        $(mainDiv).addClass("formgen clearfix").append(fieldDiv);
+
+        if (callback === undefined) {
+            return mainDiv;
+        } else {
+            callback(mainDiv);
+        }
     };
 
     /*
@@ -77,21 +83,33 @@ define(['../lib/handlebars'], function(require, exports, module) {
         }
 
         var path = config.wrapperPath;
-        var msgClass = config.wrapperMsgClass;
+
         $.ajax({
             url: path,
             type: "GET",
-            success: function(html) {
-                var fieldHtml = $(field)[0].outerHTML;
-                var data = {
-                    star: config.star,
-                    msg: config.msg,
-                    field: fieldHtml
+            success: function(source) {
+                // compile the template and put the field
+                source = source.replace(/{{{field}}}/g,
+                    "<div id='J_wrapper_tmp'></div>");
+                var template = Handlebars.compile(source);
+                var result = $(template(config));
+                result.find("#J_wrapper_tmp").append(field);
+                // unwrap it
+                $(field).unwrap();
+                // set fg_msg function
+                field.fg_msg = function() {
+                    if (arguments.length > 0) {
+                        result.find(".formgen_msg").text(arguments[0]);
+                    }
+                    return result.find(".formgen_msg").text();
+                };
+                if (callback !== undefined) {
+                    callback(result);
                 }
             },
             fail: function() {
                 callback(false);
             }
-        })
+        });
     }
 });

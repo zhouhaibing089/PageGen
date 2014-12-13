@@ -3,9 +3,8 @@
 
 <head>
     <title>FormGen Test</title>
-    <script src="../../lib/jquery-1.11.1.js"></script>
     <script src="../../lib/sea.js"></script>
-    <link href="formgen.css" rel="stylesheet" type="text/css">
+    <link href="./formgen.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -65,7 +64,8 @@
                     "value": 4,
                     "text": "Music"
                 }],
-                "wrapper": "common",
+                "wrapper": "html",
+                "wrapperPath": "wrappers/common.tpl",
                 "star": true,
                 "tip": "1-3个",
                 "max": 3,
@@ -83,7 +83,7 @@
 
         var fg;
 
-        seajs.use(["formgen/index"], function(FormGenerator) {
+        seajs.use(["lib/jquery", "formgen/index"], function($, FormGenerator) {
 
             fg = new FormGenerator(config, value);
             fg.build(null, function(form) {

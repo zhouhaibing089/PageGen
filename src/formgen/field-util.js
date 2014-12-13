@@ -1,4 +1,6 @@
-define(function(require, exports, module) {
+define(['../lib/jquery'], function(require, exports, module) {
+
+    var $ = require("../lib/jquery");
 
     // value function which can be delegate to jQuery
     var fg_$_val = function() {

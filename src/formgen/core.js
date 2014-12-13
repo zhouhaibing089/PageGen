@@ -1,8 +1,9 @@
 /**
  * Created by zhb on 12/02/2014
  */
-define(['../util'], function(require, exports, module) {
+define(['../lib/jquery', '../util'], function(require, exports, module) {
 
+    var $ = require("../lib/jquery");
     var util = require("util");
 
     // module variable
@@ -55,22 +56,28 @@ define(['../util'], function(require, exports, module) {
         // currently building field index
         var index = 0;
         // callback function when we build a field
-        var cb = function(ele, config) {
+        var cb = function(field, config) {
             // no result
-            if (ele === null) {
+            if (field === null) {
                 return process(++index);
             }
 
-            self.fields.push(ele);
+            self.fields.push(field);
 
-            if (config.wrapper === undefined) {
-                $(form).append(ele);
+            // the wrapper function
+            var wrapper = wrappers[config.wrapper];
+
+            if (wrapper === undefined) {
+                $(form).append(field);
+                process(++index);
             } else {
-                $(form).append(wrappers[config.wrapper](ele, config));
+                wrapper(field, config, function(result) {
+                    if (result !== false) {
+                        $(form).append(result);
+                    }
+                    process(++index);
+                });
             }
-
-            // go on with the next
-            process(++index);
         };
         // build the given index-specified field
         var process = function(index) {

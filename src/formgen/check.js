@@ -1,7 +1,9 @@
 /**
  * Created by zhb on 12/7/14.
  */
-define(function(require, exports, module) {
+define(['../lib/jquery'], function(require, exports, module) {
+
+    var $ = require('../lib/jquery');
 
     // the wrapper of callback function
     var cb = function(field, result, callback) {

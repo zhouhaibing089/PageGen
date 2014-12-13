@@ -14,6 +14,7 @@ define(['./core', './field', './wrapper'], function(require, exports, module) {
     fg.registerHandler("checkbox", field.checkbox);
 
     fg.registerWrapper("common", wrapper.common);
+    fg.registerWrapper("html", wrapper.html);
 
     return fg;
 });
