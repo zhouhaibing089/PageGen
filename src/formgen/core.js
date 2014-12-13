@@ -106,7 +106,8 @@ define(['../util'], function(require, exports, module) {
             if (field.fg_val === undefined) {
                 return;
             }
-            data[field.name] = field.fg_val();
+            var name = $(field).attr("name");
+            data[name] = field.fg_val();
         });
 
         data = $.extend(data, param);
