@@ -7,9 +7,9 @@ define(['../lib/jquery', './check', './field-util'], function(require, exports, 
 
     var $ = require("../lib/jquery");
     // the check module
-    var check = require('formgen/check');
+    var check = require('./check');
     // the field-util module
-    var fieldUtil = require('formgen/field-util');
+    var fieldUtil = require('./field-util');
 
     // the alias of document
     var doc = document;

@@ -3,9 +3,9 @@
  */
 define(['./core', './field', './wrapper'], function(require, exports, module) {
 
-    var fg = require('formgen/core');
-    var field = require('formgen/field');
-    var wrapper = require('formgen/wrapper');
+    var fg = require('./core');
+    var field = require('./field');
+    var wrapper = require('./wrapper');
 
     fg.registerHandler("text", field.text);
     fg.registerHandler("textarea", field.text);

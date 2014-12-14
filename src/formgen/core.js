@@ -4,7 +4,7 @@
 define(['../lib/jquery', '../util'], function(require, exports, module) {
 
     var $ = require("../lib/jquery");
-    var util = require("util");
+    var util = require("../util");
 
     // module variable
     /* extension point, produce fields */
