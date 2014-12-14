@@ -49,6 +49,7 @@ textarea,
 
 .formgen_msg {
     margin: 3px 0px;
+    margin-left: 5px;
     height: 20px;
     font-size: 14px;
 }
