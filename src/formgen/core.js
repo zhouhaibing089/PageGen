@@ -34,6 +34,28 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
         wrappers[type] = wrapper;
     };
 
+    /* if you just want to generate a single field */
+    FG.build = function(config, value, callback) {
+        // avoid the undefined is not a function
+        if (callback === undefined) {
+            callback = new Function();
+        }
+        // if the config is null
+        if (!config) {
+            callback(null);
+            return;
+        }
+        // the handler function
+        var handler = handlers[config.type];
+        // if no handler
+        if (!handler) {
+            callback(null);
+            return;
+        }
+        // get it
+        handler(config, value, callback);
+    };
+
     // FGP variable
     var FGP = FG.prototype;
 
