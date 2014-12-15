@@ -67,6 +67,12 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
     FGP.build = function(form, callback) {
         var self = this;
 
+        // if only one parameter is provided
+        if (typeof(form) === "function") {
+            callback = form;
+            form = null;
+        }
+
         if (form == null) {
             form = doc.createElement("form");
         }
