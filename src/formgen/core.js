@@ -38,7 +38,7 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
     FG.build = function(config, value, callback) {
         // avoid the undefined is not a function
         if (callback === undefined) {
-            callback = new Function();
+            callback = function() {};
         }
         // if the config is null
         if (!config) {
@@ -53,7 +53,26 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
             return;
         }
         // get it
-        handler(config, value, callback);
+        handler(config, value, function(field, config) {
+            // no result
+            if (field === null) {
+                callback(null);
+            }
+            // the wrapper function
+            var wrapper = wrappers[config.wrapper];
+
+            if (wrapper === undefined) {
+                callback(field);
+            } else {
+                wrapper(field, config, function(result) {
+                    if (result !== false) {
+                        callback(result);
+                    } else {
+                        callback(field);
+                    }
+                });
+            }
+        });
     };
 
     // FGP variable
@@ -73,7 +92,7 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
             form = null;
         }
 
-        if (form == null) {
+        if (form === null) {
             form = doc.createElement("form");
         }
         this.form = form;
