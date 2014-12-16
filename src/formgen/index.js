@@ -12,6 +12,7 @@ define(['./core', './field', './wrapper'], function(require, exports, module) {
     fg.registerHandler("hidden", field.text);
     fg.registerHandler("select", field.select);
     fg.registerHandler("checkbox", field.checkbox);
+    fg.registerHandler("date", field.date);
 
     fg.registerWrapper("common", wrapper.common);
     fg.registerWrapper("html", wrapper.html);

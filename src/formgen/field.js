@@ -3,9 +3,9 @@
  *
  * Created by zhb on 2014/12/02
  */
-define(['../lib/jquery', './check', './field-util'], function(require, exports, module) {
+define(['../lib/jquery-ui', './check', './field-util'], function(require, exports, module) {
 
-    var $ = require("../lib/jquery");
+    var $ = require("../lib/jquery-ui");
     // the check module
     var check = require('./check');
     // the field-util module
@@ -24,10 +24,11 @@ define(['../lib/jquery', './check', './field-util'], function(require, exports, 
 
     // get text field
     exports.text = function(cfg, val, callback) {
+        var ret = null;
         if (cfg.type === "textarea") {
-            var ret = doc.createElement("textarea");
+            ret = doc.createElement("textarea");
         } else {
-            var ret = doc.createElement("input");
+            ret = doc.createElement("input");
         }
         // set the attributes
         fieldUtil.addAttr(ret, cfg);
@@ -116,7 +117,7 @@ define(['../lib/jquery', './check', './field-util'], function(require, exports, 
             // get value
             var value = [];
             $(ret).find('[name="' + cfg.name + '"]').filter(function() {
-                return this.checked == true;
+                return this.checked === true;
             }).each(function() {
                 value.push(this.value);
             });
@@ -149,6 +150,20 @@ define(['../lib/jquery', './check', './field-util'], function(require, exports, 
         });
 
         callback(ret, cfg);
+    };
+
+    /*
+     * the date input
+     */
+    exports.date = function(config, value, callback) {
+        // we use the text type
+        config.type = "text";
+        // now we extend the text input
+        exports.text(config, value, function(ret) {
+            // but we want it to be a datepicker
+            $(ret).datepicker();
+            callback(ret, config);
+        });
     };
 
 });
