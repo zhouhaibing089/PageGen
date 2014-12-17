@@ -17,7 +17,7 @@ function FormGenerator(config, value) {}
 function build(config, value, callback) {}
 ```
 
-这里的`config`指的是单个域的配置，`value`也是指但个域的值，`callback`指定生成后的回调函数，回调函数接收一个参数，即生成的输入域。
+这里的`config`指的是单个域的配置，`value`也是指单个域的值，`callback`指定生成后的回调函数，回调函数接收一个参数，即生成的输入域。
 
 样例:
 
