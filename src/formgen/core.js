@@ -154,6 +154,11 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
      * the second parameter is the callback function after submit.
      */
     FGP.submit = function(param, callback) {
+        if (typeof(param) === "function") {
+            callback = param;
+            param = {};
+        }
+
         var data = {};
 
         this.fields.forEach(function(field) {
@@ -165,7 +170,6 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
         });
 
         data = $.extend(param, data);
-        console.log(data);
 
         var form = $(this.form);
 
@@ -175,13 +179,12 @@ define(['../lib/jquery', '../util'], function(require, exports, module) {
             "data": data,
             "cache": false,
             "success": function(data) {
-                console.log(data);
                 if (callback !== undefined) {
                     callback(data);
                 }
             },
             "error": function() {
-                console.log("submit error");
+                alert("submit error");
             }
         });
     };
