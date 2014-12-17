@@ -59,10 +59,8 @@ define(['../lib/jquery', '../lib/handlebars'], function(require, exports, module
 
         $(mainDiv).addClass("formgen clearfix").append(fieldDiv);
 
-        if (callback === undefined) {
-            return mainDiv;
-        } else {
-            callback(mainDiv);
+        if (callback !== undefined) {
+            callback(mainDiv, config);
         }
     };
 
@@ -104,12 +102,12 @@ define(['../lib/jquery', '../lib/handlebars'], function(require, exports, module
                     return result.find(".formgen_msg").text();
                 };
                 if (callback !== undefined) {
-                    callback(result);
+                    callback(result, config);
                 }
             },
             fail: function() {
-                callback(false);
+                callback(false, config);
             }
         });
-    }
+    };
 });
