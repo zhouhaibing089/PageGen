@@ -1,9 +1,11 @@
-define(["./formgen/index", "./lib/jquery", "./helper/url", "./helper/ajax"], function(require, exports, module) {
+define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "./helper/ajax", "event"], function(require, exports, module) {
 
     var FG = require("./formgen/index");
+    var TG = require("./tablegen/index");
     var $ = require("./lib/jquery");
     var url = require("./helper/url");
     var ajax = require("./helper/ajax");
+    var Event = require("event");
 
     var doc = document;
 
@@ -32,9 +34,37 @@ define(["./formgen/index", "./lib/jquery", "./helper/url", "./helper/ajax"], fun
         var fg = new FG(config, value);
         fg.build(form, function(ret) {
             if (callback) {
-                callback(form);
+                callback(ret);
             }
         });
     };
 
+    // the implementation of table
+    exports.table = function(config, parent, callback) {
+        var table = doc.createElement("table");
+        if (parent) {
+            $(parent).append(table);
+        }
+        if (config.dataUrl) {
+            ajax(config.dataUrl, url.getParameters(), function(ret) {
+                buildTable(config, ret.data, table, parent ? null : callback);
+            });
+        } else {
+            buildTable(config, [], table, parent ? null : callback);
+        }
+
+        if (parent) {
+            callback(null);
+        }
+    };
+
+    // do the real build work
+    var buildTable = function(config, listValue, table, callback) {
+        var tg = new TG(config, listValue);
+        tg.build(table, function(ret) {
+            if (callback) {
+                callback(ret);
+            }
+        });
+    };
 });

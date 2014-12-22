@@ -16,7 +16,10 @@
     </div>
     <script>
         seajs.config({
-            "base": "../src/"
+            "base": "../src/",
+            "alias": {
+                "event": "/test/event.js"
+            }
         });
 
         // test case
@@ -83,6 +86,18 @@
                     "label": "出生日期:",
                     "wrapper": "common"
                 }]
+            }, {
+                "type": "table",
+                "headers": [
+                    {
+                        "type": "text",
+                        "text": "name"
+                    },
+                    {
+                        "type": "image",
+                        "text": "photo"
+                    }
+                ]
             }]
         };
 
