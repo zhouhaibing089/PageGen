@@ -74,4 +74,23 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
             }
         });
     };
+
+    // css does not need to be loaded asynchronously
+    exports.css = function(config, parent, callback) {
+        // the link tag should be inserted into head
+        if (!Array.isArray(config)) {
+            config = [config];
+        }
+        config.forEach(function(css) {
+            var link = doc.createElement("link");
+            link.href = css;
+            link.rel = "stylesheet";
+            if (parent) {
+                $(parent).append(link);
+            } else {
+                doc.head.appendChild(link);
+            }
+        });
+        callback(null);
+    };
 });
