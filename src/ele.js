@@ -1,10 +1,11 @@
-define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "./helper/ajax"], function(require, exports, module) {
+define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "./helper/ajax", "./lib/handlebars"], function(require, exports, module) {
 
     var FG = require("./formgen/index");
     var TG = require("./tablegen/index");
     var $ = require("./lib/jquery");
     var url = require("./helper/url");
     var ajax = require("./helper/ajax");
+    var Handlebars = require("./lib/handlebars");
 
     var doc = document;
 
@@ -24,7 +25,7 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
         }
         // if the data url is provided
         if (config.dataUrl) {
-            ajax(config.dataUrl, url.getParameters(), function(ret) {
+            ajax.get(config.dataUrl, url.getParameters(), function(ret) {
                 buildForm(config, ret.data, form, parent ? null : callback);
             });
         } else {
@@ -53,7 +54,7 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
             $(parent).append(table);
         }
         if (config.dataUrl) {
-            ajax(config.dataUrl, url.getParameters(), function(ret) {
+            ajax.get(config.dataUrl, url.getParameters(), function(ret) {
                 buildTable(config, ret.data, table, parent ? null : callback);
             });
         } else {
@@ -78,10 +79,7 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
     // css does not need to be loaded asynchronously
     exports.css = function(config, parent, callback) {
         // the link tag should be inserted into head
-        if (!Array.isArray(config)) {
-            config = [config];
-        }
-        config.forEach(function(css) {
+        config.files.forEach(function(css) {
             var link = doc.createElement("link");
             link.href = css;
             link.rel = "stylesheet";
@@ -92,5 +90,33 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
             }
         });
         callback(null);
+    };
+
+    // directly use html template
+    exports.html = function(config, parent, callback) {
+        if (config.dataUrl) {
+            ajax(config.dataUrl, url.getParameters(), function(ret) {
+                buildHtml(config, ret.data, parent, callback);
+            });
+        } else {
+            buildHtml(config, null, parent, callback);
+        }
+    };
+
+    // build the html
+    var buildHtml = function(config, value, parent, callback) {
+        ajax.get(config.htmlPath, function(html) {
+            var template = Handlebars.compile(html);
+            var result = $(template({
+                config: config,
+                value: value
+            }));
+            if (parent) {
+                $(parent).append(result);
+                callback(null);
+            } else {
+                callback(result);
+            }
+        });
     };
 });

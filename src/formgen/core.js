@@ -142,7 +142,7 @@ define(['../lib/jquery'], function(require, exports, module) {
             if (handler === undefined) {
                 cb(null, field);
             } else {
-                handlers[field.type](field, self.value.get(field.name), cb);
+                handlers[field.type](field, self.value.fg_get(field.name), cb);
             }
         };
 
@@ -238,7 +238,7 @@ define(['../lib/jquery'], function(require, exports, module) {
     // set new value
     FGP.setValue = function(value) {
         this.fields.forEach(function(field) {
-            field.fg_val(value.get($(field).attr("name")));
+            field.fg_val(value.fg_get($(field).attr("name")));
         });
     };
 

@@ -78,14 +78,14 @@ define(["../lib/jquery"], function(require, exports, module) {
             var handler = handlers[header.type];
             if (handler) {
                 // build it
-                handler(header, value.get(name), function(td) {
+                handler(header, value.fg_get(name), function(td) {
                     $(tr).append($(td).attr("name", name ?
                     name.replace(/\./g, "_") : ""));
                 });
             } else {
                 // use the raw text
                 var td = doc.createElement("td");
-                $(tr).append($(td).append(value.get(name)));
+                $(tr).append($(td).append(value.fg_get(name)));
             }
         });
         // append it

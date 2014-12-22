@@ -3,6 +3,10 @@ define(['../lib/jquery'], function(require, exports, module) {
     var $ = require("../lib/jquery");
 
     exports.get = function(url, data, callback) {
+        if (typeof(data) === "function") {
+            callback = data;
+            data = {};
+        }
         $.ajax({
             url: url,
             type: "GET",

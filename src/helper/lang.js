@@ -4,9 +4,9 @@ define(function(require, exports, module) {
         /**
         * Object.prototype.get
         */
-        if (({}.get) === undefined) {
+        if (({}.fg_get) === undefined) {
 
-            Object.defineProperty(Object.prototype, "get", {
+            Object.defineProperty(Object.prototype, "fg_get", {
                 "value": function(path) {
                     // undefined value return self
                     if (path === undefined) {
@@ -38,7 +38,7 @@ define(function(require, exports, module) {
                     var name = path.substr(0, index);
                     path = path.substr(index + 1);
 
-                    return obj[name].get(path);
+                    return obj[name].fg_get(path);
                 },
                 enumerable: false
             });
