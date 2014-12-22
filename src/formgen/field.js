@@ -54,15 +54,7 @@ define(['../lib/jquery-ui', './check', './field-util'], function(require, export
         ret.fg_check = function(callback) {
             check.fg_range(ret, cfg, callback);
         };
-
-        // trigger the check
-        $(ret).focusout(function() {
-            ret.fg_check(function(result) {
-                if (result.success === true) {
-                    ret.fg_msg("");
-                }
-            });
-        });
+        
         // restore the initial state
         $(ret).focusin(function() {
             ret.fg_msg("");
