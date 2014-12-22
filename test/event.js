@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
-    exports.sayHello = function() {
-        alert("Hello");
+    exports.saySomething = function(value) {
+        alert(JSON.stringify(value));
     };
 
 });

@@ -13,8 +13,8 @@ define(["../lib/jquery"], function(require, exports, module) {
     var TG = function(config, value) {
         this.config = config ? config : {};
         this.value = value ? value : [{
-            name: "hello",
-            photo: "www.baidu.com"
+            name: "zhb",
+            photo: "a"
         }];
     };
 
@@ -38,7 +38,9 @@ define(["../lib/jquery"], function(require, exports, module) {
             table = doc.createElement("table");
         }
         // assign the table generator as an attribute
+        this.table = table;
         table._tg = this;
+        $(table).attr("id", self.config.id).addClass(self.config["class"]);
         if (!callback) {
             callback = function() {};
         }
@@ -55,26 +57,46 @@ define(["../lib/jquery"], function(require, exports, module) {
         $(table).append(tbody);
         // add row
         self.value.forEach(function(value) {
-            var tr = doc.createElement("tr");
-            // save the value as an attribute in tr
-            tr._tgValue = JSON.stringify(value);
-            // build every field
-            self.config.headers.forEach(function(header) {
-                var handler = handlers[header.type];
-                if (handler) {
-                    handler(header, value.get(header.name), function(td) {
-                        $(tr).append($(td).attr("name", header.name
-                            .replace(/\./g, "_")));
-                    });
-                } else {
-                    var td = doc.createElement("td");
-                    $(tr).append($(td).append(value.get(header.name)));
-                }
-            });
-            $(tbody).append(tr);
+            self.append(value);
         });
         // everything is done
         callback(table);
+    };
+
+    // append one more row
+    TGP.append = function(value) {
+        var self = this;
+        // create the tr
+        var tr = doc.createElement("tr");
+        // save the value as an attribute in tr
+        tr._tgValue = JSON.stringify(value);
+        // build every field
+        self.config.headers.forEach(function(header) {
+            // the name
+            var name = header.name;
+            // the handler
+            var handler = handlers[header.type];
+            if (handler) {
+                // build it
+                handler(header, value.get(name), function(td) {
+                    $(tr).append($(td).attr("name", name ?
+                    name.replace(/\./g, "_") : ""));
+                });
+            } else {
+                // use the raw text
+                var td = doc.createElement("td");
+                $(tr).append($(td).append(value.get(name)));
+            }
+        });
+        // append it
+        $(self.table).find("tbody").append(tr);
+    };
+
+    // remove the given indexed row
+    TGP.remove = function(index) {
+        var self = this;
+        var tr = $(self.table).find("tbody tr")[index];
+        $(tr).remove();
     };
 
     return TG;

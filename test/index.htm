@@ -18,7 +18,8 @@
         seajs.config({
             "base": "../src/",
             "alias": {
-                "event": "/test/event.js"
+                "event": "/test/event.js",
+                "app": "/test/app.js"
             }
         });
 
@@ -84,11 +85,13 @@
                     "requiredMsg": "至少要勾选1个哦"
                 }, {
                     "type": "date",
+                    "name": "date",
                     "label": "出生日期:",
                     "wrapper": "common"
                 }]
             }, {
                 "type": "table",
+                "id": "testTable",
                 "headers": [
                     {
                         "type": "text",
@@ -99,13 +102,23 @@
                         "type": "image",
                         "text": "photo",
                         "name": "photo"
+                    },
+                    {
+                        "type": "button",
+                        "text": "hello",
+                        "onclick": "saySomething"
                     }
                 ]
             }]
         };
 
-        seajs.use(["lib/jquery", "index"], function($, PageGen) {
-            PageGen.build(config, $("#container"));
+        seajs.use(["lib/jquery", "index", "event", "app"], function($, PageGen, Event, App) {
+            // set event
+            PageGen.setEvents(Event);
+            PageGen.build(config, $("#container"), function(ret) {
+                // after build the web page, init the app
+                App.init();
+            });
         });
     </script>
 </body>

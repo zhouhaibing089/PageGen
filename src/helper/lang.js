@@ -8,6 +8,11 @@ define(function(require, exports, module) {
 
             Object.defineProperty(Object.prototype, "get", {
                 "value": function(path) {
+                    // undefined value return self
+                    if (path === undefined) {
+                        return this;
+                    }
+                    // null value return null
                     if (!path) {
                         return null;
                     }

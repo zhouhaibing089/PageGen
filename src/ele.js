@@ -12,6 +12,8 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
 
     exports.setEvents = function(evts) {
         events = evts;
+        FG.setEvents(events);
+        TG.setEvents(events);
     };
 
     // the implementation of form

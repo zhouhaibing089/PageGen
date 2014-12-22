@@ -49,4 +49,28 @@ define(["../lib/jquery"], function(require, exports, module) {
         // delegate to the text td
         exports.text(config, value, callback);
     };
+
+    // for event test, the button
+    exports.button = function(config, value, callback) {
+        var td = doc.createElement("td");
+        var button = doc.createElement("button");
+        button.type = "button";
+        $(button).attr("id", config.id).addClass(config["class"])
+            .text(config.text);
+        if (config.onclick) {
+            $(button).click(function() {
+                var event = events[config.onclick];
+                if (event) {
+                    event(value);
+                }
+            });
+        }
+        $(td).append(button);
+        
+        if (callback) {
+            callback(td);
+        } else {
+            return td;
+        }
+    };
 });
