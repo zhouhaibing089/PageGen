@@ -1,10 +1,9 @@
 /**
  * Created by zhb on 12/02/2014
  */
-define(['../lib/jquery', '../util'], function(require, exports, module) {
+define(['../lib/jquery'], function(require, exports, module) {
 
     var $ = require("../lib/jquery");
-    var util = require("../util");
 
     // module variable
     /* extension point, produce fields */

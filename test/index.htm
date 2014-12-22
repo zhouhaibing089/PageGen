@@ -1,0 +1,95 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>Page Generator</title>
+    <meta charset="utf-8">
+    <script src="../lib/sea.js"></script>
+    <link href="./css/formgen.css" rel="stylesheet" type="text/css">
+    <link href="./css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="container">
+    </div>
+    <script>
+        seajs.config({
+            "base": "../src/"
+        });
+
+        // test case
+        var config = {
+            configList: [{
+                type: "form",
+                fields: [{
+                    "type": "hidden",
+                    "name": "id"
+                }, {
+                    "type": "text",
+                    "name": "name",
+                    "label": "Name:",
+                    "wrapper": "common",
+                    "min": 5,
+                    "max": 10,
+                    "tip": "5-10字",
+                    "star": true
+                }, {
+                    "type": "select",
+                    "options": [{
+                        "value": 1,
+                        "text": "Female"
+                    }, {
+                        "value": 2,
+                        "text": "Male"
+                    }],
+                    "name": "sex",
+                    "label": "Sex:",
+                    "wrapper": "common"
+                }, {
+                    "type": "textarea",
+                    "name": "desc",
+                    "label": "Description:",
+                    "wrapper": "common",
+                    "star": true,
+                    "tip": "简单介绍一下自己"
+                }, {
+                    "type": "checkbox",
+                    "name": "hobby",
+                    "label": "Hobbies:",
+                    "options": [{
+                        "value": 1,
+                        "text": "Basketball"
+                    }, {
+                        "value": 2,
+                        "text": "Football"
+                    }, {
+                        "value": 3,
+                        "text": "Movie"
+                    }, {
+                        "value": 4,
+                        "text": "Music"
+                    }],
+                    "wrapper": "html",
+                    "wrapperPath": "/test/formgen/wrappers/common.tpl",
+                    "star": true,
+                    "tip": "1-3个",
+                    "max": 3,
+                    "maxMsg": "最多只能勾选3个",
+                    "requiredMsg": "至少要勾选1个哦"
+                }, {
+                    "type": "date",
+                    "label": "出生日期:",
+                    "wrapper": "common"
+                }]
+            }]
+        };
+
+        seajs.use(["lib/jquery", "index"], function($, PageGen) {
+            PageGen.build(config, $("#container"));
+        });
+    </script>
+</body>
+
+</html>

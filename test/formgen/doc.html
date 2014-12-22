@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FormGen Test</title>
+    <script src="../../lib/sea.js"></script>
+    <link href="./formgen.css" rel="stylesheet" type="text/css">
+    <link href="../css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="container"></div>
+    <script>
+        seajs.config({
+            "base": "../../src/"
+        });
+        // 表单配置
+        var config = {
+            fields: [{
+                type: "hidden",
+                name: "id",
+            }, {
+                type: "text",
+                name: "name",
+                label: "用户名:",
+                wrapper: "common"
+            }, {
+                type: "text",
+                name: "logo",
+                label: "logo图:",
+                wrapper: "common"
+            }],
+            action: "account.json",
+            method: "POST"
+        };
+
+        // 表单初始值
+        var value = {
+            id: 1,
+            name: "hello",
+            logo: "xxx.png"
+        };
+
+        // use我们提供的表单生成模块和jQuery
+        seajs.use(['formgen/index', 'lib/jquery'], function(FormGenerator, $) {
+            var fg = new FormGenerator(config, value);
+            // build方法接受一个回调函数作为参数，该回调函数的参数即生成的form
+            fg.build(function(form) {
+                $("#container").append(form);
+            });
+        });
+    </script>
+</body>
+
+</html>

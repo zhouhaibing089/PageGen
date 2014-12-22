@@ -1,7 +1,9 @@
 /**
  * Created by zhb on 12/7/14.
  */
-define(['./core', './field', './wrapper'], function(require, exports, module) {
+define(['../helper/lang', './core', './field', './wrapper'], function(require, exports, module) {
+    // some methods for ensurance
+    require("../helper/lang").addMethod();
 
     var fg = require('./core');
     var field = require('./field');
