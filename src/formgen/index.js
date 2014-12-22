@@ -19,5 +19,10 @@ define(['../helper/lang', './core', './field', './wrapper'], function(require, e
     fg.registerWrapper("common", wrapper.common);
     fg.registerWrapper("html", wrapper.html);
 
+    // add event mechanism
+    fg.setEvents = function(events) {
+        field.setEvents(events);
+    };
+
     return fg;
 });

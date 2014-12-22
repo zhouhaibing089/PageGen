@@ -8,6 +8,12 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
 
     var doc = document;
 
+    var events = {};
+
+    exports.setEvents = function(evts) {
+        events = evts;
+    };
+
     // the implementation of form
     exports.form = function(config, parent, callback) {
         var form = doc.createElement("form");

@@ -4,6 +4,12 @@ define(["../lib/jquery"], function(require, exports, module) {
 
     var doc = document;
 
+    var events = {};
+
+    exports.setEvents = function(evts) {
+        events = evts;
+    };
+
     // the text td
     exports.text = function(config, value, callback) {
         var td = doc.createElement("td");

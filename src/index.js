@@ -1,10 +1,14 @@
 define(["./core", "./ele"], function(require, exports, module) {
 
-    var PG = require("./core");
-    var Ele = require("./ele");
+    var pg = require("./core");
+    var ele = require("./ele");
 
-    PG.registerHandler("form", Ele.form);
-    PG.registerHandler("table", Ele.table);
+    pg.registerHandler("form", ele.form);
+    pg.registerHandler("table", ele.table);
 
-    return PG;
+    pg.setEvents = function(events) {
+        ele.setEvents(events);
+    };
+
+    return pg;
 });

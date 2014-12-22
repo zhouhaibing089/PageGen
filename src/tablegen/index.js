@@ -7,5 +7,9 @@ define(["./core", "./td"], function(require, exports, module) {
     tg.registerHandler("image", td.image);
     tg.registerHandler("date", td.date);
 
+    tg.setEvents = function(events) {
+        td.setEvents(events);
+    };
+
     return tg;
 });
