@@ -1,7 +1,6 @@
-define(["../lib/jquery", "event"], function(require, exports, module) {
+define(["../lib/jquery"], function(require, exports, module) {
 
     var $ = require("../lib/jquery");
-    var Event = require("event");
 
     var doc = document;
 
@@ -24,7 +23,7 @@ define(["../lib/jquery", "event"], function(require, exports, module) {
 
         var img = $("<img>").attr("src", value);
 
-        if (config.link) {
+        if (config && config.link) {
             var a = doc.createElement("a");
             $(td).append($(a).attr("target", "_blank").append($(img)));
         } else {

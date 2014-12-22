@@ -12,7 +12,10 @@ define(["../lib/jquery"], function(require, exports, module) {
     // constructor
     var TG = function(config, value) {
         this.config = config ? config : {};
-        this.value = value ? value : {};
+        this.value = value ? value : [{
+            name: "hello",
+            photo: "www.baidu.com"
+        }];
     };
 
     // register a new td handler
@@ -34,6 +37,8 @@ define(["../lib/jquery"], function(require, exports, module) {
         if (!table) {
             table = doc.createElement("table");
         }
+        // assign the table generator as an attribute
+        table._tg = this;
         if (!callback) {
             callback = function() {};
         }
@@ -51,17 +56,22 @@ define(["../lib/jquery"], function(require, exports, module) {
         // add row
         self.value.forEach(function(value) {
             var tr = doc.createElement("tr");
+            // save the value as an attribute in tr
+            tr._tgValue = JSON.stringify(value);
+            // build every field
             self.config.headers.forEach(function(header) {
                 var handler = handlers[header.type];
                 if (handler) {
-                    handler(value.get(header.name), function(td) {
-                        $(tr).append(td);
+                    handler(header, value.get(header.name), function(td) {
+                        $(tr).append($(td).attr("name", header.name
+                            .replace(/\./g, "_")));
                     });
                 } else {
                     var td = doc.createElement("td");
                     $(tr).append($(td).append(value.get(header.name)));
                 }
             });
+            $(tbody).append(tr);
         });
         // everything is done
         callback(table);

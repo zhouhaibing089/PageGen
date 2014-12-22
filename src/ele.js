@@ -1,11 +1,10 @@
-define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "./helper/ajax", "event"], function(require, exports, module) {
+define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "./helper/ajax"], function(require, exports, module) {
 
     var FG = require("./formgen/index");
     var TG = require("./tablegen/index");
     var $ = require("./lib/jquery");
     var url = require("./helper/url");
     var ajax = require("./helper/ajax");
-    var Event = require("event");
 
     var doc = document;
 
@@ -50,7 +49,7 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
                 buildTable(config, ret.data, table, parent ? null : callback);
             });
         } else {
-            buildTable(config, [], table, parent ? null : callback);
+            buildTable(config, null, table, parent ? null : callback);
         }
 
         if (parent) {

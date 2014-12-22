@@ -95,8 +95,9 @@ define(['../lib/jquery'], function(require, exports, module) {
             form = doc.createElement("form");
         }
         this.form = form;
+        form._fg = this;
         /* add form attributes */
-        $(form).attr("id", this.config.formId).addClass(this.config.formClass)
+        $(form).attr("id", this.config.id).addClass(this.config["class"])
             .attr("method", this.config.method).attr("action", this.config.action);
 
         // currently building field index
@@ -206,7 +207,7 @@ define(['../lib/jquery'], function(require, exports, module) {
                 pass = false;
             }
             check(++index);
-        }
+        };
 
         var check = function(index) {
             // done
@@ -225,6 +226,20 @@ define(['../lib/jquery'], function(require, exports, module) {
         };
 
         check(0);
+    };
+
+    // clear old value
+    FGP.clearValue = function() {
+        this.fields.forEach(function(field) {
+            field.fg_val(null);
+        });
+    };
+
+    // set new value
+    FGP.setValue = function(value) {
+        this.fields.forEach(function(field) {
+            field.fg_val(value.get($(field).attr("name")));
+        });
     };
 
     return FG;

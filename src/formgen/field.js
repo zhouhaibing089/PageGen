@@ -3,14 +3,13 @@
  *
  * Created by zhb on 2014/12/02
  */
-define(['../lib/jquery-ui', './check', './field-util', "event"], function(require, exports, module) {
+define(['../lib/jquery-ui', './check', './field-util'], function(require, exports, module) {
 
     var $ = require("../lib/jquery-ui");
     // the check module
     var check = require('./check');
     // the field-util module
     var fieldUtil = require('./field-util');
-    var Event = require("event");
 
     // the alias of document
     var doc = document;
