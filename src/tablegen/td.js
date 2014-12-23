@@ -7,7 +7,9 @@ define(["../lib/jquery"], function(require, exports, module) {
     var events = {};
 
     exports.setEvents = function(evts) {
-        events = evts;
+        for (var m in evts) {
+            events[m] = evts[m];
+        }
     };
 
     // the text td
@@ -66,7 +68,7 @@ define(["../lib/jquery"], function(require, exports, module) {
             });
         }
         $(td).append(button);
-        
+
         if (callback) {
             callback(td);
         } else {

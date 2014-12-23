@@ -18,7 +18,9 @@ define(['../lib/jquery-ui', './check', './field-util'], function(require, export
 
     // set the events variable
     exports.setEvents = function(evts) {
-        events = evts;
+        for (var m in evts) {
+            events[m] = evts[m];
+        }
     };
 
     // the simple message function which just alert it
@@ -54,7 +56,7 @@ define(['../lib/jquery-ui', './check', './field-util'], function(require, export
         ret.fg_check = function(callback) {
             check.fg_range(ret, cfg, callback);
         };
-        
+
         // restore the initial state
         $(ret).focusin(function() {
             ret.fg_msg("");

@@ -18,7 +18,8 @@
             "base": "../src/",
             "alias": {
                 "event": "/test/event.js",
-                "app": "/test/app.js"
+                "app": "/test/app.js",
+                "ext": "/test/ext.js"
             }
         });
 
@@ -91,23 +92,19 @@
             }, {
                 "type": "table",
                 "id": "testTable",
-                "headers": [
-                    {
-                        "type": "text",
-                        "text": "name",
-                        "name": "name"
-                    },
-                    {
-                        "type": "image",
-                        "text": "photo",
-                        "name": "photo"
-                    },
-                    {
-                        "type": "button",
-                        "text": "hello",
-                        "onclick": "saySomething"
-                    }
-                ]
+                "headers": [{
+                    "type": "text",
+                    "text": "name",
+                    "name": "name"
+                }, {
+                    "type": "image",
+                    "text": "photo",
+                    "name": "photo"
+                }, {
+                    "type": "button",
+                    "text": "hello",
+                    "onclick": "saySomething"
+                }]
             }, {
                 "type": "css",
                 "files": [
@@ -119,12 +116,20 @@
             }]
         };
 
-        seajs.use(["lib/jquery", "index", "event", "app"], function($, PageGen, Event, App) {
+        seajs.use(["lib/jquery", "index", "event", "app", "extension"], function($, PageGen, Event, App, Ext) {
             // set event
-            PageGen.setEvents(Event);
+            if (Event) {
+                PageGen.setEvents(Event);
+            }
+            // add extension
+            if (Ext) {
+                PageGen.addExt(Ext);
+            }
             PageGen.build(config, $("#container"), function(ret) {
                 // after build the web page, init the app
-                App.init();
+                if (App) {
+                    App.init();
+                }
             });
         });
     </script>

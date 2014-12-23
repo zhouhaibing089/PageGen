@@ -12,9 +12,22 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
     var events = {};
 
     exports.setEvents = function(evts) {
-        events = evts;
-        FG.setEvents(events);
-        TG.setEvents(events);
+        for (var m in evts) {
+            events[m] = evts[m];
+        }
+        FG.setEvents(evts);
+        TG.setEvents(evts);
+    };
+
+    // add extension
+    exports.addExt = function(extension) {
+        var type;
+        for (type in extension.fg) {
+            FG.registerHandler(type, extension.fg.type);
+        }
+        for (type in extension.tg) {
+            TG.registerHandler(type, extension.tg.type);
+        }
     };
 
     // the implementation of form
