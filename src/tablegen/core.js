@@ -99,5 +99,9 @@ define(["../lib/jquery"], function(require, exports, module) {
         $(tr).remove();
     };
 
+    TGP.clear = function() {
+        $(this.table).find("tbody").empty();
+    };
+
     return TG;
 });

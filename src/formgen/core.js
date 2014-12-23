@@ -237,9 +237,10 @@ define(['../lib/jquery'], function(require, exports, module) {
 
     // set new value
     FGP.setValue = function(value) {
-        this.fields.forEach(function(field) {
-            field.fg_val(value.fg_get($(field).attr("name")));
-        });
+        this.value = value;
+        this.fields = [];
+        $(this.form).empty();
+        this.build(this.form);
     };
 
     return FG;

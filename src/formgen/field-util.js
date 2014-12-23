@@ -33,7 +33,7 @@ define(['../lib/jquery'], function(require, exports, module) {
             field.fg_frozen = fg_disable_frozen;
         }
 
-        if (val === null) {
+        if (val === null || val === undefined) {
             return;
         }
         field.fg_val(val);
