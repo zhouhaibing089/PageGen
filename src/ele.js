@@ -23,10 +23,16 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
     exports.addExt = function(extension) {
         var type;
         for (type in extension.fg) {
-            FG.registerHandler(type, extension.fg.type);
+            FG.registerHandler(type, extension.fg[type]);
         }
         for (type in extension.tg) {
-            TG.registerHandler(type, extension.tg.type);
+            TG.registerHandler(type, extension.tg[type]);
+        }
+        for (type in extension) {
+            if (type === "fg" || type === "tg") {
+                continue;
+            }
+            exports[type] = extension[type];
         }
     };
 

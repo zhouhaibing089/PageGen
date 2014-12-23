@@ -8,8 +8,15 @@ define(["./core", "./ele"], function(require, exports, module) {
     pg.registerHandler("css", ele.css);
     pg.registerHandler("html", ele.html);
 
-    pg.setEvents = function(events) {
-        ele.setEvents(events);
+    var events = {};
+
+    pg.setEvents = function(evts) {
+        events = evts;
+        ele.setEvents(evts);
+    };
+
+    pg.getEvents = function() {
+        return events;
     };
 
     pg.addExt = function(extension) {
