@@ -62,6 +62,7 @@ define(['../lib/jquery', '../lib/handlebars'], function(require, exports, module
         if (callback !== undefined) {
             callback(mainDiv, config);
         }
+        postFunc(ele, mainDiv, config);
     };
 
     /*
@@ -104,10 +105,17 @@ define(['../lib/jquery', '../lib/handlebars'], function(require, exports, module
                 if (callback !== undefined) {
                     callback(result, config);
                 }
+                postFunc(field, result, config);
             },
             fail: function() {
                 callback(false, config);
             }
         });
+    };
+
+    var postFunc = function(field, result, config) {
+        if (typeof(config.post) === "function") {
+            config.post(field, result, config);
+        }
     };
 });
