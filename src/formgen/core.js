@@ -147,7 +147,7 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
             if (handler === undefined) {
                 cb(null, field);
             } else {
-                handlers[field.type](field, self.value.fg_get(field.name), cb);
+                handlers[field.type](field, self.value._getValue(field.name), cb);
             }
         };
 
