@@ -111,6 +111,41 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
         callback(null);
     };
 
+    // for js, the file need to be loaded by order
+    exports.js = function(config, parent, callback) {
+        var files = config.files;
+
+        var load = function(index) {
+            if (index === files.length) {
+                callback(null);
+                return;
+            }
+
+            var cb = function() {
+                load(++index);
+            };
+
+            var script = doc.createElement("script");
+            var supportOnload = "onload" in script;
+            if (supportOnload) {
+                script.onload = cb;
+            } else {
+                script.onreadystatechange = function() {
+                    if (/loaded|complete/.test(node.readyState)) {
+                        cb();
+                    }
+                };
+            }
+
+            script.async = true;
+            script.src = files[index];
+            doc.head.appendChild(script);
+        };
+
+        load(0);
+    };
+
+
     // directly use html template
     exports.html = function(config, parent, callback) {
         if (config.dataUrl) {
@@ -124,12 +159,18 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
 
     // build the html
     var buildHtml = function(config, value, parent, callback) {
+        config = $.extend({compile: true}, config);
         ajax.get(config.htmlPath, function(html) {
-            var template = Handlebars.compile(html);
-            var result = $(template({
-                config: config,
-                value: value
-            }));
+            var result;
+            if (config.compile) {
+                var template = Handlebars.compile(html);
+                result = $(template({
+                    config: config,
+                    value: value
+                }));
+            } else {
+                result = html;
+            }
             if (parent) {
                 $(parent).append(result);
                 callback(null);

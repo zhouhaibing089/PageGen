@@ -1,9 +1,10 @@
 /**
  * Created by zhb on 12/02/2014
  */
-define(['../lib/jquery'], function(require, exports, module) {
+define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
 
     var $ = require("../lib/jquery");
+    var url = require("../helper/url");
 
     // module variable
     /* extension point, produce fields */
@@ -18,6 +19,10 @@ define(['../lib/jquery'], function(require, exports, module) {
         var args = arguments;
         this.config = args.length > 0 ? args[0] : {};
         this.value = args.length > 1 ? args[1] : {};
+
+        if (config.urlValue) {
+            this.value = $.extend(url.getParameters(), this.value);
+        }
 
         // the fields
         this.fields = [];

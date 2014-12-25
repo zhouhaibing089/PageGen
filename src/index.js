@@ -6,6 +6,7 @@ define(["./core", "./ele"], function(require, exports, module) {
     pg.registerHandler("form", ele.form);
     pg.registerHandler("table", ele.table);
     pg.registerHandler("css", ele.css);
+    pg.registerHandler("js", ele.js);
     pg.registerHandler("html", ele.html);
 
     var events = {};

@@ -13,7 +13,7 @@ define(function(require, exports, module) {
         var kvList = search.split("&");
         kvList.forEach(function(kv) {
             kv = kv.split("=");
-            data[kv[0]] = kv[1];
+            data[kv[0]] = decodeURIComponent(kv[1]);
         });
         data.path = window.location.pathname;
         return data;
