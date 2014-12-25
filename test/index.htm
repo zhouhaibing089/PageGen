@@ -19,7 +19,7 @@
             "alias": {
                 "event": "/test/event.js",
                 "app": "/test/app.js",
-                "ext": "/test/ext.js"
+                "ext": "/test/extension.js"
             }
         });
 
@@ -116,7 +116,7 @@
             }]
         };
 
-        seajs.use(["lib/jquery", "index", "event", "app", "extension"], function($, PageGen, Event, App, Ext) {
+        seajs.use(["lib/jquery", "index", "event", "app", "ext"], function($, PageGen, Event, App, Ext) {
             // set event
             if (Event) {
                 PageGen.setEvents(Event);
