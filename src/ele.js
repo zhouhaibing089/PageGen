@@ -131,7 +131,7 @@ define(["./formgen/index", "./tablegen/index", "./lib/jquery", "./helper/url", "
                 script.onload = cb;
             } else {
                 script.onreadystatechange = function() {
-                    if (/loaded|complete/.test(node.readyState)) {
+                    if (/loaded|complete/.test(script.readyState)) {
                         cb();
                     }
                 };
