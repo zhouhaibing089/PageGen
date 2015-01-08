@@ -129,7 +129,7 @@
             PageGen.build(config, $("#container"), function(ret) {
                 // after build the web page, init the app
                 if (App) {
-                    App.init();
+                    App.init(config);
                 }
             });
         });
