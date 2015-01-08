@@ -23,9 +23,6 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
         if (config.urlValue) {
             this.value = $.extend(url.getParameters(), this.value);
         }
-
-        // the fields
-        this.fields = [];
     };
 
     /* register a new handler for given type */
@@ -114,8 +111,6 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
                 return process(++index);
             }
 
-            self.fields.push(field);
-
             // the wrapper function
             var wrapper = wrappers[config.wrapper];
 
@@ -165,8 +160,9 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
         }
 
         var data = {};
-
-        this.fields.forEach(function(field) {
+        // get all fields
+        var fields = $(this.form).find(".formgen_field");
+        fields.forEach(function(field) {
             if (field.fg_val === undefined) {
                 return;
             }
@@ -202,6 +198,8 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
         var pass = true;
         var index = 0;
 
+        var fields = $(this.form).find(".formgen_field");
+
         // to avoid `undefined is not a function problem`
         if (callback === undefined) {
             callback = new Function();
@@ -216,13 +214,13 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
 
         var check = function(index) {
             // done
-            if (index === self.fields.length) {
+            if (index === fields.length) {
                 callback(pass);
                 return;
             }
-            var field = self.fields[index];
+            var field = fields[index];
             if (field && field.fg_check) {
-                self.fields[index].fg_check(cb);
+                fields[index].fg_check(cb);
             } else {
                 cb({
                     success: true
@@ -235,7 +233,7 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
 
     // clear old value
     FGP.clearValue = function() {
-        this.fields.forEach(function(field) {
+        $(this.form).find(".formgen_field").forEach(function(field) {
             field.fg_val(null);
         });
     };
@@ -243,7 +241,6 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
     // set new value
     FGP.setValue = function(value) {
         this.value = value;
-        this.fields = [];
         $(this.form).empty();
         this.build(this.form);
     };
