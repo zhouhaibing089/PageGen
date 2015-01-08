@@ -111,9 +111,9 @@ define(['../lib/jquery', '../helper/url'], function(require, exports, module) {
                 return process(++index);
             }
 
+            $(field).addClass("formgen_field");
             // the wrapper function
             var wrapper = wrappers[config.wrapper];
-
             if (wrapper === undefined) {
                 $(form).append(field);
                 process(++index);

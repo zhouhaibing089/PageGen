@@ -69,7 +69,7 @@ define(['../lib/jquery-ui', './check', './field-util'], function(require, export
                 }
             });
         });
-        $(ret).addClass("formgen_field");
+        
         // return
         callback(ret, cfg);
     };
@@ -89,7 +89,6 @@ define(['../lib/jquery-ui', './check', './field-util'], function(require, export
         // set value
         fieldUtil.setValue(ret, val, cfg.frozen);
 
-        $(ret).addClass("formgen_field");
         callback(ret, cfg);
     };
 
@@ -165,7 +164,6 @@ define(['../lib/jquery-ui', './check', './field-util'], function(require, export
             ret.fg_msg("");
         });
 
-        $(ret).addClass("formgen_field");
         callback(ret, cfg);
     };
 
